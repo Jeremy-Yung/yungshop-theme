@@ -3595,3 +3595,108 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+/* YungShop visual polish */
+:root {
+  --yungshop-radius-lg: 1.6rem;
+  --yungshop-shadow-soft: 0 1.2rem 3.2rem rgba(var(--color-shadow), 0.08);
+}
+
+.button,
+.shopify-challenge__button,
+.customer button,
+button.shopify-payment-button__button--unbranded {
+  min-height: 4.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  transition: transform var(--duration-short) ease, box-shadow var(--duration-short) ease, opacity var(--duration-short) ease;
+}
+
+.button:hover,
+.shopify-challenge__button:hover,
+.customer button:hover,
+button.shopify-payment-button__button--unbranded:hover {
+  transform: translateY(-0.1rem);
+  box-shadow: var(--yungshop-shadow-soft);
+}
+
+.banner__heading,
+.title,
+.product__title h1,
+.collection-hero__title {
+  letter-spacing: -0.03em;
+}
+
+.banner__box {
+  max-width: 78rem;
+}
+
+.banner__text {
+  font-size: 1.8rem;
+}
+
+.card-wrapper,
+.collection-card-wrapper,
+.article-card-wrapper {
+  transition: transform var(--duration-default) ease, box-shadow var(--duration-default) ease;
+}
+
+.card-wrapper:hover,
+.collection-card-wrapper:hover,
+.article-card-wrapper:hover {
+  transform: translateY(-0.3rem);
+}
+
+.card__media .media,
+.product__media,
+.image-with-text__media,
+.multicolumn-card {
+  overflow: hidden;
+}
+
+.price {
+  font-weight: 700;
+}
+
+.announcement-bar__message {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.header__menu-item {
+  font-weight: 600;
+}
+
+.product__info-container .product-form,
+.product__info-container .product__description,
+.product__info-container .icon-with-text {
+  margin-top: 2rem;
+}
+
+.product-form__buttons {
+  max-width: 100%;
+}
+
+.footer {
+  margin-top: 0;
+}
+
+@media screen and (max-width: 749px) {
+  .banner__heading {
+    font-size: calc(var(--font-heading-scale) * 3.6rem);
+  }
+
+  .banner__text {
+    font-size: 1.5rem;
+  }
+
+  .button,
+  .shopify-challenge__button,
+  .customer button,
+  button.shopify-payment-button__button--unbranded {
+    min-height: 4.6rem;
+  }
+}
