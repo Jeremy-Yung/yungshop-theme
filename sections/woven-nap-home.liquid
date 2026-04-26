@@ -1,0 +1,1187 @@
+{%- liquid
+  assign hero_image_url = 'woven-nap-hero.png' | asset_url
+  if section.settings.hero_image != blank
+    assign hero_image_url = section.settings.hero_image | image_url: width: 2200
+  endif
+
+  assign before_image_url = 'woven-nap-before.png' | asset_url
+  if section.settings.before_image != blank
+    assign before_image_url = section.settings.before_image | image_url: width: 1200
+  endif
+
+  assign after_image_url = 'woven-nap-after.png' | asset_url
+  if section.settings.after_image != blank
+    assign after_image_url = section.settings.after_image | image_url: width: 1200
+  endif
+
+  assign lifestyle_image_url = 'woven-nap-lifestyle.png' | asset_url
+  if section.settings.lifestyle_image != blank
+    assign lifestyle_image_url = section.settings.lifestyle_image | image_url: width: 1800
+  endif
+
+  assign featured_collection = section.settings.collection
+  assign selected_product = section.settings.featured_product
+  assign primary_link = section.settings.primary_button_link | default: routes.all_products_collection_url
+  assign secondary_link = section.settings.secondary_button_link | default: routes.all_products_collection_url
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --wn-ink: #20241f;
+    --wn-muted: #5f6257;
+    --wn-green: #596a37;
+    --wn-green-dark: #435227;
+    --wn-line: #ded7cb;
+    --wn-paper: #fbf8f2;
+    --wn-cream: #f4efe6;
+    --wn-wicker: #b5844c;
+    --wn-shadow: 0 18px 48px rgba(46, 40, 30, 0.12);
+    color: var(--wn-ink);
+    background: var(--wn-paper);
+  }
+
+  #shopify-section-{{ section.id }} .wn-home {
+    font-family: var(--font-body-family);
+    background: linear-gradient(180deg, #fbf8f2 0%, #f5efe4 100%);
+  }
+
+  .section-header .header-wrapper,
+  .announcement-bar-section .utility-bar {
+    background: #f4efe7;
+    color: #20241f;
+  }
+
+  .section-header .header {
+    max-width: none;
+  }
+
+  .section-header .header__heading .h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    color: #7a4f2a;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  .announcement-bar-section .announcement-bar__message {
+    min-height: 30px;
+    padding: 8px 0;
+    color: #20241f;
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+
+  #shopify-section-{{ section.id }} .wn-shell {
+    width: min(100%, 1440px);
+    margin: 0 auto;
+    padding: 0 36px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-heading {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--wn-ink);
+  }
+
+  #shopify-section-{{ section.id }} .wn-button {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--wn-green);
+    border-radius: 4px;
+    padding: 0 28px;
+    color: var(--wn-green-dark);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+
+  #shopify-section-{{ section.id }} .wn-button:hover {
+    transform: translateY(-1px);
+  }
+
+  #shopify-section-{{ section.id }} .wn-button--primary {
+    background: var(--wn-green);
+    color: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .wn-button--primary:hover {
+    background: var(--wn-green-dark);
+  }
+
+  #shopify-section-{{ section.id }} .wn-hero {
+    min-height: clamp(520px, 58vw, 720px);
+    display: flex;
+    align-items: center;
+    background-image:
+      linear-gradient(90deg, rgba(251, 248, 242, 0.98) 0%, rgba(251, 248, 242, 0.92) 34%, rgba(251, 248, 242, 0.52) 52%, rgba(251, 248, 242, 0.02) 72%),
+      var(--wn-hero-image);
+    background-size: cover;
+    background-position: center right;
+    border-bottom: 1px solid var(--wn-line);
+  }
+
+  #shopify-section-{{ section.id }} .wn-hero__content {
+    width: min(520px, 46vw);
+    padding: 62px 0 74px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-hero h1 {
+    margin: 0 0 24px;
+    font-size: clamp(45px, 5.8vw, 76px);
+    line-height: 0.96;
+  }
+
+  #shopify-section-{{ section.id }} .wn-hero p {
+    max-width: 430px;
+    margin: 0 0 28px;
+    color: #353930;
+    font-size: 19px;
+    line-height: 1.5;
+  }
+
+  #shopify-section-{{ section.id }} .wn-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-compare {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: hidden;
+    border-bottom: 1px solid var(--wn-line);
+  }
+
+  #shopify-section-{{ section.id }} .wn-compare__panel {
+    position: relative;
+    min-height: clamp(220px, 25vw, 330px);
+    background-size: cover;
+    background-position: center;
+  }
+
+  #shopify-section-{{ section.id }} .wn-compare__panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 46%, rgba(0, 0, 0, 0.38));
+  }
+
+  #shopify-section-{{ section.id }} .wn-compare__label {
+    position: absolute;
+    z-index: 1;
+    left: 28px;
+    bottom: 22px;
+    color: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .wn-compare__panel--after .wn-compare__label {
+    right: 28px;
+    left: auto;
+    text-align: right;
+  }
+
+  #shopify-section-{{ section.id }} .wn-compare__label strong {
+    display: block;
+    font-size: 21px;
+    line-height: 1.1;
+  }
+
+  #shopify-section-{{ section.id }} .wn-compare__label span {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-compare__handle {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    width: 54px;
+    height: 54px;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    transform: translate(-50%, -50%);
+    font-weight: 800;
+    color: var(--wn-ink);
+  }
+
+  #shopify-section-{{ section.id }} .wn-benefits {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    padding: 34px 0 38px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-benefit {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 26px;
+    text-align: center;
+    border-left: 1px solid var(--wn-line);
+  }
+
+  #shopify-section-{{ section.id }} .wn-benefit:first-child {
+    border-left: 0;
+  }
+
+  #shopify-section-{{ section.id }} .wn-benefit__icon {
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 14px;
+    color: var(--wn-green);
+  }
+
+  #shopify-section-{{ section.id }} .wn-benefit__icon svg {
+    width: 54px;
+    height: 54px;
+    stroke: currentColor;
+    stroke-width: 1.55;
+    fill: none;
+  }
+
+  #shopify-section-{{ section.id }} .wn-benefit h3 {
+    margin: 0 0 9px;
+    font-size: 17px;
+    line-height: 1.2;
+  }
+
+  #shopify-section-{{ section.id }} .wn-benefit p {
+    margin: 0;
+    color: #353930;
+    font-size: 14px;
+    line-height: 1.38;
+  }
+
+  #shopify-section-{{ section.id }} .wn-shop-area {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 390px;
+    gap: 28px;
+    align-items: start;
+    padding: 0 0 56px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-lifestyle {
+    min-height: 300px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    overflow: hidden;
+    border-radius: 8px;
+    padding: 36px 42px;
+    background-image: linear-gradient(90deg, rgba(33, 31, 25, 0.46), rgba(33, 31, 25, 0.02) 64%), var(--wn-lifestyle-image);
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .wn-lifestyle h2 {
+    max-width: 420px;
+    margin: 0;
+    color: #fff;
+    font-size: clamp(31px, 4vw, 44px);
+    line-height: 1.08;
+  }
+
+  #shopify-section-{{ section.id }} .wn-play {
+    flex: 0 0 auto;
+    width: 76px;
+    height: 76px;
+    display: grid;
+    place-items: center;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  #shopify-section-{{ section.id }} .wn-play::before {
+    content: "";
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-left: 21px solid #fff;
+  }
+
+  #shopify-section-{{ section.id }} .wn-card {
+    border: 1px solid var(--wn-line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: var(--wn-shadow);
+    backdrop-filter: blur(12px);
+  }
+
+  #shopify-section-{{ section.id }} .wn-config {
+    padding: 22px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-config__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-config h2,
+  #shopify-section-{{ section.id }} .wn-size h2 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  #shopify-section-{{ section.id }} .wn-x {
+    width: 20px;
+    height: 20px;
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .wn-x::before,
+  #shopify-section-{{ section.id }} .wn-x::after {
+    content: "";
+    position: absolute;
+    top: 9px;
+    left: 1px;
+    width: 18px;
+    height: 1px;
+    background: var(--wn-ink);
+  }
+
+  #shopify-section-{{ section.id }} .wn-x::before {
+    transform: rotate(45deg);
+  }
+
+  #shopify-section-{{ section.id }} .wn-x::after {
+    transform: rotate(-45deg);
+  }
+
+  #shopify-section-{{ section.id }} .wn-option {
+    display: grid;
+    grid-template-columns: 20px 48px 1fr 78px;
+    gap: 14px;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #ece4d8;
+  }
+
+  #shopify-section-{{ section.id }} .wn-option:first-of-type {
+    border-top: 0;
+  }
+
+  #shopify-section-{{ section.id }} .wn-radio {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #9b9d91;
+    border-radius: 50%;
+  }
+
+  #shopify-section-{{ section.id }} .wn-option--selected .wn-radio {
+    border: 5px solid var(--wn-green);
+  }
+
+  #shopify-section-{{ section.id }} .wn-option__icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--wn-line);
+    border-radius: 50%;
+    color: var(--wn-green);
+    font-size: 24px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-option__text strong,
+  #shopify-section-{{ section.id }} .wn-bundle strong {
+    display: block;
+    font-size: 14px;
+    line-height: 1.25;
+  }
+
+  #shopify-section-{{ section.id }} .wn-option__text span,
+  #shopify-section-{{ section.id }} .wn-bundle span {
+    display: block;
+    margin-top: 3px;
+    color: var(--wn-muted);
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  #shopify-section-{{ section.id }} .wn-option img {
+    width: 78px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-bundle {
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    margin: 12px 0 14px;
+    padding: 14px;
+    border: 1px solid var(--wn-green);
+    border-radius: 6px;
+    background: #fbfaf5;
+  }
+
+  #shopify-section-{{ section.id }} .wn-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 26px;
+    padding: 0 10px;
+    border-radius: 4px;
+    background: #d0a35f;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .wn-price {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    margin-top: 4px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-price s {
+    color: #8b8d82;
+  }
+
+  #shopify-section-{{ section.id }} .wn-config form {
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .wn-config .wn-button {
+    width: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .wn-just {
+    display: block;
+    margin-top: 14px;
+    color: var(--wn-green-dark);
+    text-align: center;
+    font-size: 13px;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .wn-products {
+    padding: 24px 20px 0;
+  }
+
+  #shopify-section-{{ section.id }} .wn-row-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-row-title h2 {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.15;
+  }
+
+  #shopify-section-{{ section.id }} .wn-view {
+    color: var(--wn-ink);
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .wn-product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-product {
+    overflow: hidden;
+    border: 1px solid #eee6da;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.64);
+  }
+
+  #shopify-section-{{ section.id }} .wn-product__image {
+    display: block;
+    aspect-ratio: 1.28 / 1;
+    background: #f5eee2;
+  }
+
+  #shopify-section-{{ section.id }} .wn-product__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .wn-product__body {
+    padding: 14px 16px 18px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-swatches {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--swatch);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+
+  #shopify-section-{{ section.id }} .wn-product h3 {
+    margin: 0 0 5px;
+    font-size: 15px;
+    line-height: 1.3;
+  }
+
+  #shopify-section-{{ section.id }} .wn-product a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .wn-product__price {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .wn-product__meta {
+    margin: 0;
+    color: var(--wn-muted);
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  #shopify-section-{{ section.id }} .wn-lower {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 390px;
+    gap: 28px;
+    align-items: start;
+    padding: 0 0 70px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-why {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+    padding: 22px 20px 0;
+    border-top: 1px solid var(--wn-line);
+  }
+
+  #shopify-section-{{ section.id }} .wn-why h2 {
+    margin: 0 0 12px;
+    font-size: 31px;
+    line-height: 1.12;
+  }
+
+  #shopify-section-{{ section.id }} .wn-why p {
+    margin: 0 0 14px;
+    color: var(--wn-muted);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  #shopify-section-{{ section.id }} .wn-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border: 1px solid var(--wn-line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.52);
+    font-size: 13px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-table th,
+  #shopify-section-{{ section.id }} .wn-table td {
+    padding: 12px 10px;
+    border-left: 1px solid var(--wn-line);
+    border-top: 1px solid var(--wn-line);
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  #shopify-section-{{ section.id }} .wn-table tr:first-child th {
+    border-top: 0;
+  }
+
+  #shopify-section-{{ section.id }} .wn-table th:first-child,
+  #shopify-section-{{ section.id }} .wn-table td:first-child {
+    border-left: 0;
+    text-align: left;
+  }
+
+  #shopify-section-{{ section.id }} .wn-table .is-best {
+    background: rgba(89, 106, 55, 0.11);
+    color: var(--wn-green-dark);
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .wn-dots {
+    white-space: nowrap;
+    letter-spacing: 0;
+    color: #60665a;
+  }
+
+  #shopify-section-{{ section.id }} .wn-dots--best {
+    color: var(--wn-green);
+  }
+
+  #shopify-section-{{ section.id }} .wn-size {
+    padding: 22px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-size__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-size-card {
+    border: 1px solid var(--wn-line);
+    border-radius: 8px;
+    padding: 13px;
+    background: rgba(255, 255, 255, 0.64);
+  }
+
+  #shopify-section-{{ section.id }} .wn-size-card__badge {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 6px;
+    border: 1px solid var(--wn-green);
+    border-radius: 50%;
+    color: var(--wn-green);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .wn-size-card p {
+    margin: 0 0 10px;
+    color: var(--wn-muted);
+    font-size: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-cat-line {
+    height: 80px;
+    margin: 0 0 10px;
+    border: 1px solid #b8aa93;
+    border-radius: 999px 999px 28px 28px;
+    background:
+      radial-gradient(circle at 36% 42%, transparent 0 11px, #596a37 12px, transparent 13px),
+      radial-gradient(circle at 65% 42%, transparent 0 11px, #596a37 12px, transparent 13px),
+      linear-gradient(180deg, rgba(255,255,255,0) 54%, rgba(89,106,55,0.13) 55%);
+  }
+
+  #shopify-section-{{ section.id }} .wn-tags {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-tags span {
+    display: flex;
+    min-height: 31px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #b9ad97;
+    border-radius: 4px;
+    color: var(--wn-green-dark);
+    font-size: 11px;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .wn-size .wn-button {
+    width: 100%;
+    margin-top: 18px;
+  }
+
+  @media screen and (max-width: 989px) {
+    #shopify-section-{{ section.id }} .wn-shell {
+      padding: 0 20px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-hero {
+      min-height: auto;
+      align-items: flex-end;
+      background-image:
+        linear-gradient(180deg, rgba(251, 248, 242, 0.1) 0%, rgba(251, 248, 242, 0.92) 52%, rgba(251, 248, 242, 1) 100%),
+        var(--wn-hero-image);
+      background-position: center top;
+      padding-top: 280px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-hero__content {
+      width: 100%;
+      padding: 34px 0 42px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-hero p {
+      font-size: 17px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-benefits,
+    #shopify-section-{{ section.id }} .wn-shop-area,
+    #shopify-section-{{ section.id }} .wn-lower,
+    #shopify-section-{{ section.id }} .wn-why {
+      grid-template-columns: 1fr;
+    }
+
+    #shopify-section-{{ section.id }} .wn-benefit {
+      border-left: 0;
+      border-top: 1px solid var(--wn-line);
+    }
+
+    #shopify-section-{{ section.id }} .wn-benefit:first-child {
+      border-top: 0;
+    }
+
+    #shopify-section-{{ section.id }} .wn-products,
+    #shopify-section-{{ section.id }} .wn-why {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .wn-compare,
+    #shopify-section-{{ section.id }} .wn-product-grid,
+    #shopify-section-{{ section.id }} .wn-size__grid {
+      grid-template-columns: 1fr;
+    }
+
+    #shopify-section-{{ section.id }} .wn-compare__handle {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .wn-actions {
+      display: grid;
+    }
+
+    #shopify-section-{{ section.id }} .wn-button {
+      width: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .wn-lifestyle {
+      min-height: 420px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 26px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-option {
+      grid-template-columns: 20px 44px 1fr;
+    }
+
+    #shopify-section-{{ section.id }} .wn-option img {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .wn-table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
+</style>
+
+<section
+  class="wn-home"
+  style="
+    --wn-hero-image: url('{{ hero_image_url }}');
+    --wn-before-image: url('{{ before_image_url }}');
+    --wn-after-image: url('{{ after_image_url }}');
+    --wn-lifestyle-image: url('{{ lifestyle_image_url }}');
+  "
+>
+  <div class="wn-hero">
+    <div class="wn-shell">
+      <div class="wn-hero__content">
+        <h1 class="wn-heading">{{ section.settings.hero_heading | escape }}</h1>
+        <p>{{ section.settings.hero_text | escape }}</p>
+        <div class="wn-actions">
+          <a class="wn-button wn-button--primary" href="{{ primary_link }}">{{ section.settings.primary_button_label | escape }}</a>
+          <a class="wn-button" href="{{ secondary_link }}">{{ section.settings.secondary_button_label | escape }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wn-compare" aria-label="Basket comparison">
+    <div class="wn-compare__panel" style="background-image: var(--wn-before-image);">
+      <div class="wn-compare__label">
+        <strong>Before</strong>
+        <span>Cluttered. Uncomfortable.</span>
+      </div>
+    </div>
+    <div class="wn-compare__panel wn-compare__panel--after" style="background-image: var(--wn-after-image);">
+      <div class="wn-compare__label">
+        <strong>After</strong>
+        <span>Beautiful. Breathable. Belonged.</span>
+      </div>
+    </div>
+    <span class="wn-compare__handle" aria-hidden="true">&lsaquo; &rsaquo;</span>
+  </div>
+
+  <div class="wn-shell">
+    <div class="wn-benefits">
+      <article class="wn-benefit">
+        <span class="wn-benefit__icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M7 22c11 8 21-8 32 0 7 5 12 3 18-2"/><path d="M7 34c11 8 21-8 32 0 7 5 12 3 18-2"/><path d="M7 46c11 8 21-8 32 0 7 5 12 3 18-2"/></svg>
+        </span>
+        <h3>Air-Flow Tech</h3>
+        <p>Natural weave for year-round breathability.</p>
+      </article>
+      <article class="wn-benefit">
+        <span class="wn-benefit__icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M19 23h26l5 29H14l5-29Z"/><path d="M24 23v-5a8 8 0 0 1 16 0v5"/></svg>
+        </span>
+        <h3>Move With You</h3>
+        <p>Lightweight design with integrated handles.</p>
+      </article>
+      <article class="wn-benefit">
+        <span class="wn-benefit__icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><rect x="15" y="9" width="34" height="46" rx="3"/><path d="M21 17h4M29 17h4M37 17h6"/><circle cx="32" cy="37" r="12"/><path d="M39 31a9 9 0 0 1-7 15"/></svg>
+        </span>
+        <h3>Easy Refresh</h3>
+        <p>Removable and machine-washable cushions.</p>
+      </article>
+      <article class="wn-benefit">
+        <span class="wn-benefit__icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M17 34h30a8 8 0 0 1 8 8v8H9v-8a8 8 0 0 1 8-8Z"/><path d="M17 34v-9a8 8 0 0 1 8-8h14a8 8 0 0 1 8 8v9"/><path d="M15 50v7M49 50v7M9 42H4M60 42h-5"/></svg>
+        </span>
+        <h3>Home Decor</h3>
+        <p>Blends seamlessly into your living space.</p>
+      </article>
+    </div>
+
+    <div class="wn-shop-area">
+      <div>
+        <div class="wn-lifestyle">
+          <h2 class="wn-heading">Lightweight.<br>Move it. They love it.</h2>
+          <span class="wn-play" aria-hidden="true"></span>
+        </div>
+        <div class="wn-products">
+          <div class="wn-row-title">
+            <h2 class="wn-heading">{{ section.settings.collection_heading | escape }}</h2>
+            <a class="wn-view" href="{{ featured_collection.url | default: routes.all_products_collection_url }}">View all &rarr;</a>
+          </div>
+          <div class="wn-product-grid">
+            {%- if featured_collection != blank and featured_collection.products_count > 0 -%}
+              {%- for product in featured_collection.products limit: 3 -%}
+                <article class="wn-product">
+                  <a class="wn-product__image" href="{{ product.url }}">
+                    {%- if product.featured_image != blank -%}
+                      {{ product.featured_image | image_url: width: 640 | image_tag: loading: 'lazy', alt: product.featured_image.alt | default: product.title }}
+                    {%- elsif section.settings.product_card_image != blank -%}
+                      {{ section.settings.product_card_image | image_url: width: 640 | image_tag: loading: 'lazy', alt: product.title }}
+                    {%- else -%}
+                      <img src="{{ 'woven-nap-product.png' | asset_url }}" alt="{{ product.title | escape }}" width="520" height="398" loading="lazy">
+                    {%- endif -%}
+                  </a>
+                  <div class="wn-product__body">
+                    <div class="wn-swatches" aria-hidden="true">
+                      <span class="wn-swatch" style="--swatch:#5f6b3f"></span>
+                      <span class="wn-swatch" style="--swatch:#d4b27b"></span>
+                      <span class="wn-swatch" style="--swatch:#6b4b2d"></span>
+                    </div>
+                    <h3><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>
+                    <p class="wn-product__price">{{ product.price | money }}</p>
+                    <p class="wn-product__meta">For cats up to 20 lbs</p>
+                  </div>
+                </article>
+              {%- endfor -%}
+            {%- else -%}
+              {%- assign fallback_titles = 'The Nest Basket - M|The Nest Basket - L|The Nest Basket - L (High Sides)' | split: '|' -%}
+              {%- assign fallback_prices = '$59.00|$69.00|$79.00' | split: '|' -%}
+              {%- assign fallback_meta = 'For cats up to 12 lbs|For cats up to 20 lbs|For cats up to 20 lbs' | split: '|' -%}
+              {%- for title in fallback_titles -%}
+                <article class="wn-product">
+                  <a class="wn-product__image" href="{{ routes.all_products_collection_url }}">
+                    {%- if section.settings.product_card_image != blank -%}
+                      {{ section.settings.product_card_image | image_url: width: 640 | image_tag: loading: 'lazy', alt: title }}
+                    {%- else -%}
+                      <img src="{{ 'woven-nap-product.png' | asset_url }}" alt="{{ title | escape }}" width="520" height="398" loading="lazy">
+                    {%- endif -%}
+                  </a>
+                  <div class="wn-product__body">
+                    <div class="wn-swatches" aria-hidden="true">
+                      <span class="wn-swatch" style="--swatch:#5f6b3f"></span>
+                      <span class="wn-swatch" style="--swatch:#d4b27b"></span>
+                      <span class="wn-swatch" style="--swatch:#6b4b2d"></span>
+                    </div>
+                    <h3><a href="{{ routes.all_products_collection_url }}">{{ title }}</a></h3>
+                    <p class="wn-product__price">{{ fallback_prices[forloop.index0] }}</p>
+                    <p class="wn-product__meta">{{ fallback_meta[forloop.index0] }}</p>
+                  </div>
+                </article>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+
+      <aside class="wn-card wn-config" aria-label="Cushion selection">
+        <div class="wn-config__head">
+          <h2>Choose Your Cushion</h2>
+          <span class="wn-x" aria-hidden="true"></span>
+        </div>
+        <div class="wn-option">
+          <span class="wn-radio" aria-hidden="true"></span>
+          <span class="wn-option__icon" aria-hidden="true">&#10052;</span>
+          <span class="wn-option__text"><strong>Winter Cushion</strong><span>Plush and warm</span></span>
+          {%- if section.settings.product_card_image != blank -%}
+            {{ section.settings.product_card_image | image_url: width: 320 | image_tag: loading: 'lazy', alt: '' }}
+          {%- else -%}
+            <img src="{{ 'woven-nap-product.png' | asset_url }}" alt="" width="520" height="398" loading="lazy">
+          {%- endif -%}
+        </div>
+        <div class="wn-option">
+          <span class="wn-radio" aria-hidden="true"></span>
+          <span class="wn-option__icon" aria-hidden="true">&#10086;</span>
+          <span class="wn-option__text"><strong>Summer Cushion</strong><span>Breathable and cool</span></span>
+          {%- if section.settings.product_card_image != blank -%}
+            {{ section.settings.product_card_image | image_url: width: 320 | image_tag: loading: 'lazy', alt: '' }}
+          {%- else -%}
+            <img src="{{ 'woven-nap-product.png' | asset_url }}" alt="" width="520" height="398" loading="lazy">
+          {%- endif -%}
+        </div>
+        <div class="wn-bundle">
+          <span class="wn-radio" aria-hidden="true"></span>
+          <span>
+            <strong>Complete Comfort Set</strong>
+            <span>Add both and save 15%</span>
+            <span class="wn-price"><s>$36.00</s><b>$30.60</b></span>
+          </span>
+          <span class="wn-badge">Best Value</span>
+        </div>
+        {%- if selected_product != blank and selected_product.selected_or_first_available_variant != blank -%}
+          {%- assign selected_variant = selected_product.selected_or_first_available_variant -%}
+          <form method="post" action="{{ routes.cart_add_url }}">
+            <input type="hidden" name="id" value="{{ selected_variant.id }}">
+            <button class="wn-button wn-button--primary" type="submit">
+              Add to Cart - {{ selected_variant.price | money }}
+            </button>
+          </form>
+        {%- else -%}
+          <a class="wn-button wn-button--primary" href="{{ featured_collection.url | default: routes.all_products_collection_url }}">
+            Add to Cart - {{ section.settings.fallback_cart_price | escape }}
+          </a>
+        {%- endif -%}
+        <a class="wn-just" href="{{ featured_collection.url | default: routes.all_products_collection_url }}">Just the Basket</a>
+      </aside>
+    </div>
+
+    <div class="wn-lower">
+      <div class="wn-why">
+        <div>
+          <h2 class="wn-heading">Why Woven?</h2>
+          <p>The clear choice for happier cats and beautiful homes.</p>
+          <a class="wn-view" href="{{ secondary_link }}">View Full Comparison &rarr;</a>
+        </div>
+        <table class="wn-table">
+          <tbody>
+            <tr>
+              <th>Feature</th>
+              <th class="is-best">Woven Nap Basket</th>
+              <th>Plastic Beds</th>
+              <th>Cardboard Boxes</th>
+              <th>Fabric Beds</th>
+            </tr>
+            <tr>
+              <td>Breathability</td>
+              <td class="is-best"><span class="wn-dots wn-dots--best">●●●●●</span></td>
+              <td><span class="wn-dots">●●○○○</span></td>
+              <td><span class="wn-dots">●○○○○</span></td>
+              <td><span class="wn-dots">●●○○○</span></td>
+            </tr>
+            <tr>
+              <td>Washability</td>
+              <td class="is-best"><span class="wn-dots wn-dots--best">●●●●●</span></td>
+              <td><span class="wn-dots">●●○○○</span></td>
+              <td><span class="wn-dots">●○○○○</span></td>
+              <td><span class="wn-dots">●●●○○</span></td>
+            </tr>
+            <tr>
+              <td>Durability</td>
+              <td class="is-best"><span class="wn-dots wn-dots--best">●●●●●</span></td>
+              <td><span class="wn-dots">●●○○○</span></td>
+              <td><span class="wn-dots">●○○○○</span></td>
+              <td><span class="wn-dots">●●○○○</span></td>
+            </tr>
+            <tr>
+              <td>Aesthetic</td>
+              <td class="is-best"><span class="wn-dots wn-dots--best">●●●●●</span></td>
+              <td><span class="wn-dots">●○○○○</span></td>
+              <td><span class="wn-dots">●○○○○</span></td>
+              <td><span class="wn-dots">●●○○○</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <aside class="wn-card wn-size" aria-label="Size guide">
+        <h2 class="wn-heading">Unsure about the size?</h2>
+        <div class="wn-size__grid">
+          <article class="wn-size-card">
+            <span class="wn-size-card__badge">M</span>
+            <p>Up to 12 lbs</p>
+            <div class="wn-cat-line" aria-hidden="true"></div>
+            <div class="wn-tags">
+              <span>Small / Medium Cats</span>
+              <span>Kitten Friendly</span>
+              <span>Singapura Approved</span>
+              <span>Lap Cat Fit</span>
+            </div>
+          </article>
+          <article class="wn-size-card">
+            <span class="wn-size-card__badge">L</span>
+            <p>Up to 20 lbs</p>
+            <div class="wn-cat-line" aria-hidden="true"></div>
+            <div class="wn-tags">
+              <span>Large / Chunky Cats</span>
+              <span>Ragdoll Approved</span>
+              <span>Maine Coon Approved</span>
+              <span>Stretch Room</span>
+            </div>
+          </article>
+        </div>
+        <a class="wn-button wn-button--primary" href="{{ secondary_link }}">View Full Size Guide</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Woven Nap home",
+  "tag": "section",
+  "class": "section-woven-nap-home",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Heading",
+      "default": "The Basket Your Cat Has Been Looking For."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Text",
+      "default": "A breathable woven sanctuary that feels like a box, looks like home, and stays by your side."
+    },
+    {
+      "type": "text",
+      "id": "primary_button_label",
+      "label": "Primary button label",
+      "default": "Shop the Collection"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_label",
+      "label": "Secondary button label",
+      "default": "Find Their Perfect Size"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Before image"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "After image"
+    },
+    {
+      "type": "image_picker",
+      "id": "lifestyle_image",
+      "label": "Lifestyle image"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_card_image",
+      "label": "Fallback product image"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Featured collection"
+    },
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Add-to-cart product"
+    },
+    {
+      "type": "text",
+      "id": "collection_heading",
+      "label": "Collection heading",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "text",
+      "id": "fallback_cart_price",
+      "label": "Fallback cart price",
+      "default": "$59.00"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Woven Nap home"
+    }
+  ]
+}
+{% endschema %}
