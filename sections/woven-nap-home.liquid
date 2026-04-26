@@ -401,11 +401,23 @@
     align-items: center;
     width: 100%;
     padding: 10px 0;
+    border: 0;
     border-top: 1px solid #ece4d8;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    box-shadow: none;
     color: inherit;
     cursor: pointer;
     font: inherit;
     text-align: left;
+  }
+
+  #shopify-section-{{ section.id }} .wn-option::before,
+  #shopify-section-{{ section.id }} .wn-option::after,
+  #shopify-section-{{ section.id }} .wn-bundle::before,
+  #shopify-section-{{ section.id }} .wn-bundle::after {
+    display: none;
   }
 
   #shopify-section-{{ section.id }} .wn-option:first-of-type {
@@ -486,6 +498,8 @@
     padding: 14px;
     border: 1px solid var(--wn-green);
     border-radius: 6px;
+    appearance: none;
+    -webkit-appearance: none;
     background: #fbfaf5;
     color: inherit;
     cursor: pointer;
@@ -1139,12 +1153,22 @@
     }
 
     #shopify-section-{{ section.id }} .wn-benefits {
-      padding: 18px 0 22px;
+      gap: 8px;
+      padding: 14px 0 18px;
+      border-top: 0;
     }
 
     #shopify-section-{{ section.id }} .wn-benefit {
-      min-height: 92px;
-      padding: 14px 10px;
+      min-height: 94px;
+      padding: 13px 10px;
+      border: 1px solid var(--wn-line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    #shopify-section-{{ section.id }} .wn-benefit:nth-child(-n + 2),
+    #shopify-section-{{ section.id }} .wn-benefit:nth-child(odd) {
+      border: 1px solid var(--wn-line);
     }
 
     #shopify-section-{{ section.id }} .wn-benefit p {
@@ -1162,7 +1186,8 @@
 
     #shopify-section-{{ section.id }} .wn-config h2,
     #shopify-section-{{ section.id }} .wn-size h2 {
-      font-size: 20px;
+      font-size: 22px;
+      line-height: 1.12;
     }
 
     #shopify-section-{{ section.id }} .wn-option {
@@ -1174,6 +1199,11 @@
 
     #shopify-section-{{ section.id }} .wn-config__preview {
       display: block;
+      margin-bottom: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-config__preview img {
+      height: 128px;
     }
 
     #shopify-section-{{ section.id }} .wn-option__icon {
@@ -1403,18 +1433,9 @@
       font-size: 30px;
     }
 
-    #shopify-section-{{ section.id }} .wn-benefits,
     #shopify-section-{{ section.id }} .wn-product-grid,
     #shopify-section-{{ section.id }} .wn-size__grid {
       grid-template-columns: 1fr;
-    }
-
-    #shopify-section-{{ section.id }} .wn-benefit {
-      border-left: 0;
-    }
-
-    #shopify-section-{{ section.id }} .wn-benefit:nth-child(2) {
-      border-top: 1px solid var(--wn-line);
     }
   }
 </style>
