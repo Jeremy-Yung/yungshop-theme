@@ -1193,12 +1193,20 @@
       background: linear-gradient(180deg, rgba(0, 0, 0, 0) 36%, rgba(0, 0, 0, 0.52));
     }
 
-    #shopify-section-{{ section.id }} .wn-compare__label,
+    #shopify-section-{{ section.id }} .wn-compare__label {
+      right: auto;
+      bottom: 10px;
+      left: 10px;
+      max-width: 118px;
+      text-align: left;
+    }
+
     #shopify-section-{{ section.id }} .wn-compare__panel--after .wn-compare__label {
       right: 10px;
       bottom: 10px;
-      left: 10px;
-      text-align: left;
+      left: auto;
+      max-width: 118px;
+      text-align: right;
     }
 
     #shopify-section-{{ section.id }} .wn-compare__label strong {
@@ -1576,6 +1584,9 @@
 
     #shopify-section-{{ section.id }} .wn-sticky-cart strong {
       font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     #shopify-section-{{ section.id }} .wn-sticky-cart span {
@@ -1585,10 +1596,16 @@
       font-weight: 700;
     }
 
+    #shopify-section-{{ section.id }} .wn-sticky-cart > span {
+      min-width: 0;
+    }
+
     #shopify-section-{{ section.id }} .wn-sticky-cart .wn-button {
       width: auto;
       min-height: 40px;
       padding: 0 14px;
+      flex-shrink: 0;
+      justify-self: end;
       white-space: nowrap;
     }
   }
