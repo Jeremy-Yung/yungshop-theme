@@ -19,11 +19,12 @@
     assign lifestyle_image_url = section.settings.lifestyle_image | image_url: width: 1800
   endif
 
-  assign product_image_url = 'woven-nap-product.png' | asset_url
+  assign product_image_url = 'product-main-v3-01.jpg' | asset_url
   if section.settings.product_card_image != blank
     assign product_image_url = section.settings.product_card_image | image_url: width: 700
   endif
 
+  assign fallback_product_images = 'product-main-v3-01.jpg|product-main-v3-02.jpg|product-main-v3-03.jpg|product-main-v3-04.jpg|product-main-v3-05.jpg' | split: '|'
   assign winter_cushion_image_url = 'woven-nap-winter-cushion.png' | asset_url
   assign summer_cushion_image_url = 'woven-nap-summer-cushion.png' | asset_url
 
@@ -288,6 +289,95 @@
     color: #353930;
     font-size: 14px;
     line-height: 1.38;
+  }
+
+  #shopify-section-{{ section.id }} .wn-materials {
+    padding: 0 0 34px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-materials__head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-materials__head h2 {
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.12;
+  }
+
+  #shopify-section-{{ section.id }} .wn-materials__head p {
+    max-width: 420px;
+    margin: 0;
+    color: var(--wn-muted);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  #shopify-section-{{ section.id }} .wn-material-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-material {
+    position: relative;
+    min-height: 238px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    border: 1px solid var(--wn-line);
+    border-radius: 8px;
+    background: #f5eee2;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .wn-material img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 180ms ease;
+  }
+
+  #shopify-section-{{ section.id }} .wn-material:hover img {
+    transform: scale(1.025);
+  }
+
+  #shopify-section-{{ section.id }} .wn-material::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(32, 36, 31, 0.02) 28%, rgba(32, 36, 31, 0.66) 100%);
+  }
+
+  #shopify-section-{{ section.id }} .wn-material__body {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-material strong,
+  #shopify-section-{{ section.id }} .wn-material span {
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .wn-material strong {
+    font-size: 24px;
+    line-height: 1.1;
+  }
+
+  #shopify-section-{{ section.id }} .wn-material span {
+    max-width: 310px;
+    margin-top: 7px;
+    font-size: 13px;
+    line-height: 1.35;
   }
 
   #shopify-section-{{ section.id }} .wn-shop-area {
@@ -575,7 +665,7 @@
 
   #shopify-section-{{ section.id }} .wn-product-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 18px;
   }
 
@@ -589,13 +679,14 @@
   #shopify-section-{{ section.id }} .wn-product__image {
     display: block;
     aspect-ratio: 1.28 / 1;
+    padding: 10px;
     background: #f5eee2;
   }
 
   #shopify-section-{{ section.id }} .wn-product__image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
   }
 
@@ -980,6 +1071,10 @@
       line-height: 1.35;
     }
 
+    #shopify-section-{{ section.id }} .wn-materials {
+      padding-bottom: 24px;
+    }
+
     #shopify-section-{{ section.id }} .wn-shop-area,
     #shopify-section-{{ section.id }} .wn-lower,
     #shopify-section-{{ section.id }} .wn-why {
@@ -1175,6 +1270,48 @@
       display: none;
     }
 
+    #shopify-section-{{ section.id }} .wn-materials {
+      padding-bottom: 18px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-materials__head {
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-materials__head h2 {
+      font-size: 22px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-materials__head p {
+      margin-top: 5px;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    #shopify-section-{{ section.id }} .wn-material-grid {
+      gap: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-material {
+      min-height: 156px;
+      border-radius: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-material__body {
+      padding: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-material strong {
+      font-size: 17px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-material span {
+      margin-top: 4px;
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
     #shopify-section-{{ section.id }} .wn-card {
       box-shadow: 0 12px 28px rgba(46, 40, 30, 0.1);
     }
@@ -1285,6 +1422,22 @@
 
     #shopify-section-{{ section.id }} .wn-product__meta {
       display: none;
+    }
+
+    #shopify-section-{{ section.id }} .wn-product:nth-child(5) {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 45% minmax(0, 1fr);
+      align-items: center;
+    }
+
+    #shopify-section-{{ section.id }} .wn-product:nth-child(5) .wn-product__image {
+      height: 140px;
+      aspect-ratio: auto;
+    }
+
+    #shopify-section-{{ section.id }} .wn-product:nth-child(5) h3 {
+      min-height: 0;
     }
 
     #shopify-section-{{ section.id }} .wn-lifestyle {
@@ -1523,6 +1676,29 @@
       </article>
     </div>
 
+    <div class="wn-materials">
+      <div class="wn-materials__head">
+        <h2 class="wn-heading">Shop by Material</h2>
+        <p>Use natural woven for a warm furniture feel, or PP woven when washability is the top priority.</p>
+      </div>
+      <div class="wn-material-grid">
+        <a class="wn-material" href="{{ primary_link }}" aria-label="Shop Natural Woven cat baskets">
+          <img src="{{ 'product-main-v3-01.jpg' | asset_url }}" alt="Natural woven cat basket in use" width="1080" height="1080" loading="lazy">
+          <span class="wn-material__body">
+            <strong>Natural Woven</strong>
+            <span>Rattan, bamboo and willow baskets for breathable naps.</span>
+          </span>
+        </a>
+        <a class="wn-material" href="{{ primary_link }}" aria-label="Shop PP Woven cat baskets">
+          <img src="{{ 'product-main-v3-02.jpg' | asset_url }}" alt="PP woven cat bed with cooling mat" width="1080" height="1080" loading="lazy">
+          <span class="wn-material__body">
+            <strong>PP Woven</strong>
+            <span>Lightweight washable styles for summer and daily refresh.</span>
+          </span>
+        </a>
+      </div>
+    </div>
+
     <div class="wn-shop-area">
       <div>
         <div class="wn-lifestyle">
@@ -1536,7 +1712,7 @@
           </div>
           <div class="wn-product-grid">
             {%- if featured_collection != blank and featured_collection.products_count > 0 -%}
-              {%- for product in featured_collection.products limit: 3 -%}
+              {%- for product in featured_collection.products limit: 5 -%}
                 <article class="wn-product">
                   <a class="wn-product__image" href="{{ product.url }}">
                     {%- if product.featured_image != blank -%}
@@ -1560,16 +1736,16 @@
                 </article>
               {%- endfor -%}
             {%- else -%}
-              {%- assign fallback_titles = 'The Nest Basket - M|The Nest Basket - L|The Nest Basket - L (High Sides)' | split: '|' -%}
-              {%- assign fallback_prices = '$59.00|$69.00|$79.00' | split: '|' -%}
-              {%- assign fallback_meta = 'For cats up to 12 lbs|For cats up to 20 lbs|For cats up to 20 lbs' | split: '|' -%}
+              {%- assign fallback_titles = 'Breathable Woven Cat Nap Basket|Washable PP Woven Cat Bed|Portable Woven Cat Carry Basket|Cool Bamboo Cat Villa Basket Bed|Open-Top PP Woven Cat Lounger Tray' | split: '|' -%}
+              {%- assign fallback_prices = '$59.00|$77.00|$79.00|$69.00|$49.00' | split: '|' -%}
+              {%- assign fallback_meta = 'Natural Woven · Up to 12 lbs|PP Woven · Cooling Mat|Natural Woven · Portable|Natural Woven · Up to 20 lbs|PP Woven · Easy Wash' | split: '|' -%}
               {%- for title in fallback_titles -%}
                 <article class="wn-product">
                   <a class="wn-product__image" href="{{ routes.all_products_collection_url }}">
                     {%- if section.settings.product_card_image != blank -%}
                       {{ section.settings.product_card_image | image_url: width: 640 | image_tag: loading: 'lazy', alt: title }}
                     {%- else -%}
-                      <img src="{{ 'woven-nap-product.png' | asset_url }}" alt="{{ title | escape }}" width="520" height="398" loading="lazy">
+                      <img src="{{ fallback_product_images[forloop.index0] | asset_url }}" alt="{{ title | escape }}" width="640" height="640" loading="lazy">
                     {%- endif -%}
                   </a>
                   <div class="wn-product__body">
@@ -1604,7 +1780,7 @@
           {%- if section.settings.product_card_image != blank -%}
             {{ section.settings.product_card_image | image_url: width: 700 | image_tag: alt: 'Selected cushion preview', width: 700, height: 536 }}
           {%- else -%}
-            <img src="{{ 'woven-nap-product.png' | asset_url }}" alt="Selected cushion preview" width="700" height="536">
+            <img src="{{ 'product-main-v3-01.jpg' | asset_url }}" alt="Selected cushion preview" width="1080" height="1080">
           {%- endif -%}
         </div>
         <button
@@ -1766,7 +1942,7 @@
     {%- if section.settings.product_card_image != blank -%}
       {{ section.settings.product_card_image | image_url: width: 92 | image_tag: alt: '', width: 92, height: 92, loading: 'lazy' }}
     {%- else -%}
-      <img src="{{ 'woven-nap-product.png' | asset_url }}" alt="" width="92" height="92" loading="lazy">
+      <img src="{{ 'product-main-v3-01.jpg' | asset_url }}" alt="" width="92" height="92" loading="lazy">
     {%- endif -%}
     <span>
       <strong>The Nest Basket</strong>
