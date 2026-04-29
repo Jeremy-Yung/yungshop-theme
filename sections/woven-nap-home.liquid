@@ -175,7 +175,24 @@
     z-index: 2;
     width: 12.92%;
     height: 5.95%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
     border-radius: 12px;
+    background: linear-gradient(135deg, #e7a05f 0%, #d98648 100%);
+    box-shadow: 0 12px 24px rgba(102, 61, 28, 0.18);
+    color: #fff;
+    font-size: clamp(14px, 1.25vw, 20px);
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  #shopify-section-{{ section.id }} .wn-hero__image-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 28px rgba(102, 61, 28, 0.24);
   }
 
   #shopify-section-{{ section.id }} .wn-hero__image-cta:focus-visible {
@@ -929,6 +946,9 @@
       width: 35.76%;
       height: 4.12%;
       border-radius: 14px;
+      color: #5c351d;
+      background: linear-gradient(135deg, #f3c27d 0%, #eba35d 100%);
+      font-size: clamp(18px, 6vw, 28px);
     }
 
     #shopify-section-{{ section.id }} .wn-button {
@@ -1338,7 +1358,9 @@
         </div>
       </div>
     </div>
-    <a class="wn-hero__image-cta" href="{{ primary_link }}" aria-label="{{ section.settings.primary_button_label | escape }}"></a>
+    <a class="wn-hero__image-cta" href="{{ primary_link }}" aria-label="{{ section.settings.primary_button_label | escape }}">
+      {{ section.settings.primary_button_label | escape }} <span aria-hidden="true">&rarr;</span>
+    </a>
   </div>
 
   <div class="wn-compare" aria-label="Basket comparison">
