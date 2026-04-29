@@ -3,9 +3,9 @@
     "woven_nap_home": {
       "type": "woven-nap-home",
       "settings": {
-        "hero_heading": "The Basket Your Cat Has Been Looking For.",
-        "hero_text": "A breathable woven sanctuary that feels like a box, looks like home, and stays by your side.",
-        "primary_button_label": "Shop the Collection",
+        "hero_heading": "Stay Close, Purr Louder.",
+        "hero_text": "Handwoven from natural fibers, designed to cradle your cat in a snug, secure embrace — always within reach.",
+        "primary_button_label": "Shop Now",
         "primary_button_link": "shopify://collections/all",
         "secondary_button_label": "Find Their Perfect Size",
         "secondary_button_link": "shopify://pages/size-guide",

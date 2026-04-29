@@ -1,7 +1,12 @@
 {%- liquid
-  assign hero_image_url = 'woven-nap-hero.png' | asset_url
+  assign hero_image_url = 'woven-nap-hero-desktop.png' | asset_url
   if section.settings.hero_image != blank
     assign hero_image_url = section.settings.hero_image | image_url: width: 2200
+  endif
+
+  assign hero_mobile_image_url = 'woven-nap-hero-mobile.png' | asset_url
+  if section.settings.hero_mobile_image != blank
+    assign hero_mobile_image_url = section.settings.hero_mobile_image | image_url: width: 1200
   endif
 
   assign before_image_url = 'woven-nap-before.png' | asset_url
@@ -19,14 +24,7 @@
     assign lifestyle_image_url = section.settings.lifestyle_image | image_url: width: 1800
   endif
 
-  assign product_image_url = 'product-main-v3-01.jpg' | asset_url
-  if section.settings.product_card_image != blank
-    assign product_image_url = section.settings.product_card_image | image_url: width: 700
-  endif
-
   assign fallback_product_images = 'product-main-v3-01.jpg|product-main-v3-02.jpg|product-main-v3-03.jpg|product-main-v3-04.jpg|product-main-v3-05.jpg' | split: '|'
-  assign winter_cushion_image_url = 'woven-nap-winter-cushion.png' | asset_url
-  assign summer_cushion_image_url = 'woven-nap-summer-cushion.png' | asset_url
 
   assign featured_collection = section.settings.collection
   assign selected_product = section.settings.featured_product
@@ -130,20 +128,25 @@
   }
 
   #shopify-section-{{ section.id }} .wn-hero {
-    min-height: clamp(520px, 58vw, 720px);
-    display: flex;
-    align-items: center;
-    background-image:
-      linear-gradient(90deg, rgba(251, 248, 242, 0.98) 0%, rgba(251, 248, 242, 0.92) 34%, rgba(251, 248, 242, 0.52) 52%, rgba(251, 248, 242, 0.02) 72%),
-      var(--wn-hero-image);
+    position: relative;
+    min-height: 520px;
+    aspect-ratio: 1672 / 941;
+    background-image: var(--wn-hero-image);
     background-size: cover;
-    background-position: center right;
+    background-position: center;
+    background-repeat: no-repeat;
     border-bottom: 1px solid var(--wn-line);
   }
 
   #shopify-section-{{ section.id }} .wn-hero__content {
-    width: min(520px, 46vw);
-    padding: 62px 0 74px;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   #shopify-section-{{ section.id }} .wn-hero h1 {
@@ -168,6 +171,21 @@
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-hero__image-cta {
+    position: absolute;
+    left: 5.98%;
+    top: 63.65%;
+    z-index: 2;
+    width: 12.92%;
+    height: 5.95%;
+    border-radius: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .wn-hero__image-cta:focus-visible {
+    outline: 3px solid rgba(89, 106, 55, 0.95);
+    outline-offset: 4px;
   }
 
   #shopify-section-{{ section.id }} .wn-compare {
@@ -382,7 +400,7 @@
 
   #shopify-section-{{ section.id }} .wn-shop-area {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 390px;
+    grid-template-columns: minmax(0, 1fr);
     gap: 28px;
     align-items: start;
     padding: 0 0 56px;
@@ -440,203 +458,10 @@
     backdrop-filter: blur(12px);
   }
 
-  #shopify-section-{{ section.id }} .wn-config {
-    padding: 22px;
-  }
-
-  #shopify-section-{{ section.id }} .wn-config__head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-
-  #shopify-section-{{ section.id }} .wn-config h2,
   #shopify-section-{{ section.id }} .wn-size h2 {
     margin: 0;
     font-size: 22px;
     line-height: 1.2;
-  }
-
-  #shopify-section-{{ section.id }} .wn-x {
-    width: 20px;
-    height: 20px;
-    position: relative;
-  }
-
-  #shopify-section-{{ section.id }} .wn-x::before,
-  #shopify-section-{{ section.id }} .wn-x::after {
-    content: "";
-    position: absolute;
-    top: 9px;
-    left: 1px;
-    width: 18px;
-    height: 1px;
-    background: var(--wn-ink);
-  }
-
-  #shopify-section-{{ section.id }} .wn-x::before {
-    transform: rotate(45deg);
-  }
-
-  #shopify-section-{{ section.id }} .wn-x::after {
-    transform: rotate(-45deg);
-  }
-
-  #shopify-section-{{ section.id }} .wn-option {
-    display: grid;
-    grid-template-columns: 20px 48px 1fr 78px;
-    gap: 14px;
-    align-items: center;
-    width: 100%;
-    padding: 10px 0;
-    border: 0;
-    border-top: 1px solid #ece4d8;
-    appearance: none;
-    -webkit-appearance: none;
-    background: transparent;
-    box-shadow: none;
-    color: inherit;
-    cursor: pointer;
-    font: inherit;
-    text-align: left;
-  }
-
-  #shopify-section-{{ section.id }} .wn-option::before,
-  #shopify-section-{{ section.id }} .wn-option::after,
-  #shopify-section-{{ section.id }} .wn-bundle::before,
-  #shopify-section-{{ section.id }} .wn-bundle::after {
-    display: none;
-  }
-
-  #shopify-section-{{ section.id }} .wn-option:first-of-type {
-    border-top: 0;
-  }
-
-  #shopify-section-{{ section.id }} .wn-radio {
-    width: 16px;
-    height: 16px;
-    border: 1px solid #9b9d91;
-    border-radius: 50%;
-  }
-
-  #shopify-section-{{ section.id }} .wn-option--selected .wn-radio {
-    border: 5px solid var(--wn-green);
-  }
-
-  #shopify-section-{{ section.id }} .wn-option--selected {
-    color: var(--wn-green-dark);
-  }
-
-  #shopify-section-{{ section.id }} .wn-option__icon {
-    width: 48px;
-    height: 48px;
-    display: grid;
-    place-items: center;
-    border: 1px solid var(--wn-line);
-    border-radius: 50%;
-    color: var(--wn-green);
-    font-size: 24px;
-  }
-
-  #shopify-section-{{ section.id }} .wn-option__text strong,
-  #shopify-section-{{ section.id }} .wn-bundle strong {
-    display: block;
-    font-size: 14px;
-    line-height: 1.25;
-  }
-
-  #shopify-section-{{ section.id }} .wn-option__text span,
-  #shopify-section-{{ section.id }} .wn-bundle span {
-    display: block;
-    margin-top: 3px;
-    color: var(--wn-muted);
-    font-size: 12px;
-    line-height: 1.25;
-  }
-
-  #shopify-section-{{ section.id }} .wn-option img {
-    width: 78px;
-    height: 48px;
-    object-fit: cover;
-    border-radius: 6px;
-  }
-
-  #shopify-section-{{ section.id }} .wn-config__preview {
-    display: none;
-    margin-bottom: 14px;
-    overflow: hidden;
-    border: 1px solid #ece4d8;
-    border-radius: 8px;
-    background: #f5eee2;
-  }
-
-  #shopify-section-{{ section.id }} .wn-config__preview img {
-    width: 100%;
-    height: 150px;
-    display: block;
-    object-fit: cover;
-  }
-
-  #shopify-section-{{ section.id }} .wn-bundle {
-    display: grid;
-    grid-template-columns: 20px 1fr auto;
-    gap: 14px;
-    align-items: center;
-    margin: 12px 0 14px;
-    padding: 14px;
-    border: 1px solid var(--wn-green);
-    border-radius: 6px;
-    appearance: none;
-    -webkit-appearance: none;
-    background: #fbfaf5;
-    color: inherit;
-    cursor: pointer;
-    font: inherit;
-    text-align: left;
-    width: 100%;
-  }
-
-  #shopify-section-{{ section.id }} .wn-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 26px;
-    padding: 0 10px;
-    border-radius: 4px;
-    background: #d0a35f;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-  }
-
-  #shopify-section-{{ section.id }} .wn-price {
-    display: flex;
-    gap: 8px;
-    align-items: baseline;
-    margin-top: 4px;
-  }
-
-  #shopify-section-{{ section.id }} .wn-price s {
-    color: #8b8d82;
-  }
-
-  #shopify-section-{{ section.id }} .wn-config form {
-    margin: 0;
-  }
-
-  #shopify-section-{{ section.id }} .wn-config .wn-button {
-    width: 100%;
-  }
-
-  #shopify-section-{{ section.id }} .wn-just {
-    display: block;
-    margin-top: 14px;
-    color: var(--wn-green-dark);
-    text-align: center;
-    font-size: 13px;
-    text-decoration: none;
   }
 
   #shopify-section-{{ section.id }} .wn-products {
@@ -694,20 +519,6 @@
     padding: 14px 16px 18px;
   }
 
-  #shopify-section-{{ section.id }} .wn-swatches {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  #shopify-section-{{ section.id }} .wn-swatch {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--swatch);
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
-  }
-
   #shopify-section-{{ section.id }} .wn-product h3 {
     margin: 0 0 5px;
     font-size: 15px;
@@ -720,9 +531,24 @@
   }
 
   #shopify-section-{{ section.id }} .wn-product__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px;
     margin: 0 0 8px;
     font-size: 14px;
     font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .wn-product__price-original {
+    color: #8c867a;
+    font-size: 0.88em;
+    font-weight: 500;
+  }
+
+  #shopify-section-{{ section.id }} .wn-product__price-sale {
+    color: #9d5525;
+    font-size: 1.08em;
   }
 
   #shopify-section-{{ section.id }} .wn-product__meta {
@@ -999,20 +825,15 @@
 
     #shopify-section-{{ section.id }} .wn-hero {
       min-height: 0;
-      display: block;
-      background-image:
-        linear-gradient(180deg, rgba(251, 248, 242, 0) 0%, rgba(251, 248, 242, 0.12) 48%, rgba(251, 248, 242, 0.97) 100%),
-        var(--wn-hero-image);
-      background-size: 100% auto;
-      background-position: center top;
+      background-image: var(--wn-hero-image);
+      background-size: cover;
+      background-position: center;
       background-repeat: no-repeat;
-      padding-top: clamp(230px, 59vw, 360px);
     }
 
     #shopify-section-{{ section.id }} .wn-hero__content {
-      width: 100%;
-      max-width: 620px;
-      padding: 28px 0 32px;
+      width: 1px;
+      padding: 0;
     }
 
     #shopify-section-{{ section.id }} .wn-hero h1 {
@@ -1094,10 +915,6 @@
       gap: 18px;
     }
 
-    #shopify-section-{{ section.id }} .wn-config {
-      order: -1;
-    }
-
     #shopify-section-{{ section.id }} .wn-products {
       order: 1;
       padding: 0;
@@ -1131,11 +948,13 @@
     }
 
     #shopify-section-{{ section.id }} .wn-hero {
-      padding-top: clamp(180px, 52vw, 245px);
+      aspect-ratio: 853 / 1844;
+      background-image: var(--wn-hero-mobile-image);
+      background-position: center top;
     }
 
     #shopify-section-{{ section.id }} .wn-hero__content {
-      padding: 24px 0 28px;
+      padding: 0;
     }
 
     #shopify-section-{{ section.id }} .wn-hero h1 {
@@ -1157,6 +976,14 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
+    }
+
+    #shopify-section-{{ section.id }} .wn-hero__image-cta {
+      left: 11.61%;
+      top: 39.91%;
+      width: 35.76%;
+      height: 4.12%;
+      border-radius: 14px;
     }
 
     #shopify-section-{{ section.id }} .wn-button {
@@ -1324,55 +1151,13 @@
       box-shadow: 0 12px 28px rgba(46, 40, 30, 0.1);
     }
 
-    #shopify-section-{{ section.id }} .wn-config,
     #shopify-section-{{ section.id }} .wn-size {
       padding: 16px;
     }
 
-    #shopify-section-{{ section.id }} .wn-config h2,
     #shopify-section-{{ section.id }} .wn-size h2 {
       font-size: 22px;
       line-height: 1.12;
-    }
-
-    #shopify-section-{{ section.id }} .wn-option {
-      grid-template-columns: 18px 38px minmax(0, 1fr) 56px;
-      gap: 9px;
-      min-height: 64px;
-      padding: 10px 0;
-    }
-
-    #shopify-section-{{ section.id }} .wn-config__preview {
-      display: block;
-      margin-bottom: 12px;
-    }
-
-    #shopify-section-{{ section.id }} .wn-config__preview img {
-      height: 128px;
-    }
-
-    #shopify-section-{{ section.id }} .wn-option__icon {
-      width: 38px;
-      height: 38px;
-      font-size: 20px;
-    }
-
-    #shopify-section-{{ section.id }} .wn-option img {
-      display: block;
-      width: 56px;
-      height: 42px;
-    }
-
-    #shopify-section-{{ section.id }} .wn-bundle {
-      grid-template-columns: 18px minmax(0, 1fr);
-      gap: 9px;
-      padding: 12px;
-    }
-
-    #shopify-section-{{ section.id }} .wn-badge {
-      grid-column: 2;
-      justify-self: start;
-      margin-top: 8px;
     }
 
     #shopify-section-{{ section.id }} .wn-row-title {
@@ -1405,16 +1190,6 @@
 
     #shopify-section-{{ section.id }} .wn-product__body {
       padding: 9px 9px 11px;
-    }
-
-    #shopify-section-{{ section.id }} .wn-swatches {
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    #shopify-section-{{ section.id }} .wn-swatch {
-      width: 11px;
-      height: 11px;
     }
 
     #shopify-section-{{ section.id }} .wn-product h3 {
@@ -1625,6 +1400,7 @@
   class="wn-home"
   style="
     --wn-hero-image: url('{{ hero_image_url }}');
+    --wn-hero-mobile-image: url('{{ hero_mobile_image_url }}');
     --wn-before-image: url('{{ before_image_url }}');
     --wn-after-image: url('{{ after_image_url }}');
     --wn-lifestyle-image: url('{{ lifestyle_image_url }}');
@@ -1634,14 +1410,15 @@
     <div class="wn-shell">
       <div class="wn-hero__content">
         <h1 class="wn-heading wn-hero__heading-desktop">{{ section.settings.hero_heading | escape }}</h1>
-        <h1 class="wn-heading wn-hero__heading-mobile">A Better Basket for Cat Naps.</h1>
+        <h1 class="wn-heading wn-hero__heading-mobile">Stay Close. Sleep Better.</h1>
         <p>{{ section.settings.hero_text | escape }}</p>
         <div class="wn-actions">
-          <a class="wn-button wn-button--primary" href="{{ primary_link }}">{{ section.settings.primary_button_label | escape }}</a>
-          <a class="wn-button" href="{{ secondary_link }}">{{ section.settings.secondary_button_label | escape }}</a>
+          <a class="wn-button wn-button--primary" href="{{ primary_link }}" tabindex="-1" aria-hidden="true">{{ section.settings.primary_button_label | escape }}</a>
+          <a class="wn-button" href="{{ secondary_link }}" tabindex="-1" aria-hidden="true">{{ section.settings.secondary_button_label | escape }}</a>
         </div>
       </div>
     </div>
+    <a class="wn-hero__image-cta" href="{{ primary_link }}" aria-label="{{ section.settings.primary_button_label | escape }}"></a>
   </div>
 
   <div class="wn-compare" aria-label="Basket comparison">
@@ -1682,7 +1459,7 @@
           <svg viewBox="0 0 64 64"><rect x="15" y="9" width="34" height="46" rx="3"/><path d="M21 17h4M29 17h4M37 17h6"/><circle cx="32" cy="37" r="12"/><path d="M39 31a9 9 0 0 1-7 15"/></svg>
         </span>
         <h3>Easy Refresh</h3>
-        <p>Removable and machine-washable cushions.</p>
+        <p>Easy-clean basket with a washable insert.</p>
       </article>
       <article class="wn-benefit">
         <span class="wn-benefit__icon" aria-hidden="true">
@@ -1741,20 +1518,26 @@
                     {%- endif -%}
                   </a>
                   <div class="wn-product__body">
-                    <div class="wn-swatches" aria-hidden="true">
-                      <span class="wn-swatch" style="--swatch:#5f6b3f"></span>
-                      <span class="wn-swatch" style="--swatch:#d4b27b"></span>
-                      <span class="wn-swatch" style="--swatch:#6b4b2d"></span>
-                    </div>
                     <h3><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>
-                    <p class="wn-product__price">{{ product.price | money }}</p>
+                    {%- liquid
+                      assign sale_price = product.price
+                      assign original_price = product.compare_at_price_max
+                      if original_price == blank or original_price <= sale_price
+                        assign original_price = sale_price | times: 1.25 | round
+                      endif
+                    -%}
+                    <p class="wn-product__price">
+                      <s class="wn-product__price-original">{{ original_price | money }}</s>
+                      <span class="wn-product__price-sale">{{ sale_price | money }}</span>
+                    </p>
                     <p class="wn-product__meta">For cats up to 20 lbs</p>
                   </div>
                 </article>
               {%- endfor -%}
             {%- else -%}
               {%- assign fallback_titles = 'Breathable Woven Cat Nap Basket|Washable PP Woven Cat Bed|Portable Woven Cat Carry Basket|Cool Bamboo Cat Villa Basket Bed|Open-Top PP Woven Cat Lounger Tray' | split: '|' -%}
-              {%- assign fallback_prices = '$59.00|$77.00|$79.00|$69.00|$49.00' | split: '|' -%}
+              {%- assign fallback_original_prices = '$79.00|$99.00|$99.00|$89.00|$65.00' | split: '|' -%}
+              {%- assign fallback_sale_prices = '$59.00|$77.00|$79.00|$69.00|$49.00' | split: '|' -%}
               {%- assign fallback_meta = 'Natural Woven · Up to 12 lbs|PP Woven · Cooling Mat|Natural Woven · Portable|Natural Woven · Up to 20 lbs|PP Woven · Easy Wash' | split: '|' -%}
               {%- for title in fallback_titles -%}
                 <article class="wn-product">
@@ -1766,13 +1549,11 @@
                     {%- endif -%}
                   </a>
                   <div class="wn-product__body">
-                    <div class="wn-swatches" aria-hidden="true">
-                      <span class="wn-swatch" style="--swatch:#5f6b3f"></span>
-                      <span class="wn-swatch" style="--swatch:#d4b27b"></span>
-                      <span class="wn-swatch" style="--swatch:#6b4b2d"></span>
-                    </div>
                     <h3><a href="{{ routes.all_products_collection_url }}">{{ title }}</a></h3>
-                    <p class="wn-product__price">{{ fallback_prices[forloop.index0] }}</p>
+                    <p class="wn-product__price">
+                      <s class="wn-product__price-original">{{ fallback_original_prices[forloop.index0] }}</s>
+                      <span class="wn-product__price-sale">{{ fallback_sale_prices[forloop.index0] }}</span>
+                    </p>
                     <p class="wn-product__meta">{{ fallback_meta[forloop.index0] }}</p>
                   </div>
                 </article>
@@ -1782,81 +1563,6 @@
         </div>
       </div>
 
-      <aside
-        class="wn-card wn-config"
-        aria-label="Cushion selection"
-        data-cushion-config
-        data-base-cents="{{ basket_price_cents }}"
-        data-product-image="{{ product_image_url }}"
-      >
-        <div class="wn-config__head">
-          <h2>Choose Your Cushion</h2>
-          <span class="wn-x" aria-hidden="true"></span>
-        </div>
-        <div class="wn-config__preview">
-          {%- if section.settings.product_card_image != blank -%}
-            {{ section.settings.product_card_image | image_url: width: 700 | image_tag: alt: 'Selected cushion preview', width: 700, height: 536 }}
-          {%- else -%}
-            <img src="{{ 'product-main-v3-01.jpg' | asset_url }}" alt="Selected cushion preview" width="1080" height="1080">
-          {%- endif -%}
-        </div>
-        <button
-          class="wn-option"
-          type="button"
-          data-cushion-option
-          data-label="Winter Cushion"
-          data-add-cents="1800"
-          data-image="{{ winter_cushion_image_url }}"
-        >
-          <span class="wn-radio" aria-hidden="true"></span>
-          <span class="wn-option__icon" aria-hidden="true">&#10052;</span>
-          <span class="wn-option__text"><strong>Winter Cushion</strong><span>Plush and warm</span></span>
-          <img src="{{ 'woven-nap-winter-cushion.png' | asset_url }}" alt="" width="520" height="398" loading="lazy">
-        </button>
-        <button
-          class="wn-option"
-          type="button"
-          data-cushion-option
-          data-label="Summer Cushion"
-          data-add-cents="1800"
-          data-image="{{ summer_cushion_image_url }}"
-        >
-          <span class="wn-radio" aria-hidden="true"></span>
-          <span class="wn-option__icon" aria-hidden="true">&#10086;</span>
-          <span class="wn-option__text"><strong>Summer Cushion</strong><span>Breathable and cool</span></span>
-          <img src="{{ 'woven-nap-summer-cushion.png' | asset_url }}" alt="" width="520" height="398" loading="lazy">
-        </button>
-        <button
-          class="wn-bundle"
-          type="button"
-          data-cushion-option
-          data-label="Complete Comfort Set"
-          data-add-cents="3060"
-          data-image="{{ product_image_url }}"
-        >
-          <span class="wn-radio" aria-hidden="true"></span>
-          <span>
-            <strong>Complete Comfort Set</strong>
-            <span>Add both and save 15%</span>
-            <span class="wn-price"><s>$36.00</s><b>$30.60</b></span>
-          </span>
-          <span class="wn-badge">Best Value</span>
-        </button>
-        {%- if selected_product != blank and selected_product.selected_or_first_available_variant != blank -%}
-          <form method="post" action="{{ routes.cart_add_url }}">
-            <input type="hidden" name="id" value="{{ selected_variant.id }}">
-            <input type="hidden" name="properties[Cushion]" value="Just the Basket" data-cushion-property>
-            <button class="wn-button wn-button--primary" type="submit" data-cart-label>
-              Add to Cart - {{ selected_variant.price | money }}
-            </button>
-          </form>
-        {%- else -%}
-          <a class="wn-button wn-button--primary" href="{{ featured_collection.url | default: routes.all_products_collection_url }}" data-cart-label>
-            Add to Cart - {{ section.settings.fallback_cart_price | escape }}
-          </a>
-        {%- endif -%}
-        <a class="wn-just" href="{{ featured_collection.url | default: routes.all_products_collection_url }}" data-reset-cushion>Just the Basket</a>
-      </aside>
     </div>
 
     <div class="wn-lower">
@@ -1952,7 +1658,7 @@
     <div class="wn-trust" aria-label="Trust badges">
       <div class="wn-trust__item">Environmentally Friendly</div>
       <div class="wn-trust__item">Snag-Free Weave</div>
-      <div class="wn-trust__item">Washable Cushion</div>
+      <div class="wn-trust__item">Easy-Clean Finish</div>
     </div>
   </div>
   <div class="wn-sticky-cart" data-sticky-cart>
@@ -1974,8 +1680,6 @@
     const section = document.getElementById('shopify-section-{{ section.id }}');
     if (!section) return;
 
-    const formatMoney = (cents) => `$${(cents / 100).toFixed(2)}`;
-
     const compare = section.querySelector('.wn-compare');
     const range = section.querySelector('.wn-compare__range');
     if (compare && range) {
@@ -1984,51 +1688,6 @@
       };
       range.addEventListener('input', updateCompare);
       updateCompare();
-    }
-
-    const config = section.querySelector('[data-cushion-config]');
-    if (config) {
-      const baseCents = Number(config.dataset.baseCents || 5900);
-      const productImage = config.dataset.productImage;
-      const options = Array.from(config.querySelectorAll('[data-cushion-option]'));
-      const preview = config.querySelector('.wn-config__preview img');
-      const cartLabels = section.querySelectorAll('[data-cart-label]');
-      const stickyPrice = section.querySelector('[data-sticky-price]');
-      const stickyImage = section.querySelector('.wn-sticky-cart img');
-      const propertyInput = config.querySelector('[data-cushion-property]');
-      const reset = config.querySelector('[data-reset-cushion]');
-
-      const setSelection = (option) => {
-        const addCents = option ? Number(option.dataset.addCents || 0) : 0;
-        const label = option ? option.dataset.label : 'Just the Basket';
-        const image = option ? option.dataset.image : productImage;
-        const total = baseCents + addCents;
-
-        options.forEach((item) => {
-          item.classList.toggle('wn-option--selected', item === option);
-        });
-
-        if (preview && image) preview.src = image;
-        if (stickyImage && image) stickyImage.src = image;
-        if (propertyInput) propertyInput.value = label;
-        cartLabels.forEach((item) => {
-          item.textContent = `Add to Cart - ${formatMoney(total)}`;
-        });
-        if (stickyPrice) stickyPrice.textContent = formatMoney(total);
-      };
-
-      options.forEach((option) => {
-        option.addEventListener('click', () => setSelection(option));
-      });
-
-      if (reset) {
-        reset.addEventListener('click', (event) => {
-          event.preventDefault();
-          setSelection(null);
-        });
-      }
-
-      setSelection(null);
     }
 
     const quiz = section.querySelector('[data-size-quiz]');
@@ -2080,25 +1739,30 @@
     {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Hero image"
+      "label": "Desktop hero image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_mobile_image",
+      "label": "Mobile hero image"
     },
     {
       "type": "text",
       "id": "hero_heading",
       "label": "Heading",
-      "default": "The Basket Your Cat Has Been Looking For."
+      "default": "Stay Close, Purr Louder."
     },
     {
       "type": "textarea",
       "id": "hero_text",
       "label": "Text",
-      "default": "A breathable woven sanctuary that feels like a box, looks like home, and stays by your side."
+      "default": "Handwoven from natural fibers, designed to cradle your cat in a snug, secure embrace — always within reach."
     },
     {
       "type": "text",
       "id": "primary_button_label",
       "label": "Primary button label",
-      "default": "Shop the Collection"
+      "default": "Shop Now"
     },
     {
       "type": "url",
