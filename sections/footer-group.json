@@ -1,1 +1,54 @@
-{"name":"t:sections.footer.name","type":"footer","sections":{"footer":{"type":"footer","settings":{"color_scheme":"scheme-3","newsletter_enable":true,"newsletter_heading":"Join YungShop for new arrivals and offers","enable_follow_on_shop":true,"show_social":true,"enable_country_selector":true,"enable_language_selector":true,"payment_enable":true,"show_policy":true,"margin_top":0,"padding_top":52,"padding_bottom":44}}},"order":["footer"]}
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "brand_promise": {
+          "type": "text",
+          "settings": {
+            "heading": "YungShop",
+            "subtext": "<p>Warm, breathable cat baskets designed for everyday closeness — natural textures, cozy shapes, and easy home styling.</p>"
+          }
+        },
+        "care_promise": {
+          "type": "text",
+          "settings": {
+            "heading": "Care Promise",
+            "subtext": "<p>Need help choosing a size? Our support team can help before checkout and after delivery.</p>"
+          }
+        },
+        "footer_menu": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Customer Care",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": [
+        "brand_promise",
+        "care_promise",
+        "footer_menu"
+      ],
+      "settings": {
+        "color_scheme": "scheme-3",
+        "newsletter_enable": true,
+        "newsletter_heading": "Join YungShop for new arrivals, care tips, and offers",
+        "enable_follow_on_shop": true,
+        "show_social": true,
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 52,
+        "padding_bottom": 44
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

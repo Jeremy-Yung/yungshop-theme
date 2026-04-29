@@ -15,6 +15,72 @@
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
+  .footer__trust {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    padding-bottom: 28px;
+  }
+
+  .footer__trust-item {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    min-height: 88px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .footer__trust-icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .footer__trust-copy,
+  .footer__trust-copy strong,
+  .footer__trust-copy span {
+    display: block;
+  }
+
+  .footer__trust-copy strong {
+    margin-bottom: 4px;
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  .footer__trust-copy span {
+    opacity: 0.78;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  @media screen and (max-width: 989px) {
+    .footer__trust {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .footer__trust {
+      grid-template-columns: 1fr;
+      padding-bottom: 22px;
+    }
+
+    .footer__trust-item {
+      min-height: 74px;
+      padding: 14px;
+    }
+  }
+
   @media screen and (min-width: 750px) {
     .footer {
       margin-top: {{ section.settings.margin_top }}px;
@@ -42,6 +108,36 @@
       assign only_empty_brand = true
     endif
   -%}
+  <div class="footer__trust page-width" aria-label="Store promises">
+    <div class="footer__trust-item">
+      <span class="footer__trust-icon" aria-hidden="true">✓</span>
+      <span class="footer__trust-copy">
+        <strong>Quality-Checked Weave</strong>
+        <span>Every basket is inspected for comfort, finish, and everyday durability.</span>
+      </span>
+    </div>
+    <div class="footer__trust-item">
+      <span class="footer__trust-icon" aria-hidden="true">↺</span>
+      <span class="footer__trust-copy">
+        <strong>30-Day Comfort Promise</strong>
+        <span>Try it at home and contact us if it is not the right fit.</span>
+      </span>
+    </div>
+    <div class="footer__trust-item">
+      <span class="footer__trust-icon" aria-hidden="true">🔒</span>
+      <span class="footer__trust-copy">
+        <strong>Secure Checkout</strong>
+        <span>Encrypted payment processing with major trusted payment methods.</span>
+      </span>
+    </div>
+    <div class="footer__trust-item">
+      <span class="footer__trust-icon" aria-hidden="true">✉</span>
+      <span class="footer__trust-copy">
+        <strong>Responsive Support</strong>
+        <span>Helpful sizing and order support before and after purchase.</span>
+      </span>
+    </div>
+  </div>
   {%- if section.blocks.size > 0
     or section.settings.newsletter_enable
     or section.settings.show_social
