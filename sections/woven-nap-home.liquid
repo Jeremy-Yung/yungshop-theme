@@ -271,7 +271,7 @@
 
   #shopify-section-{{ section.id }} .wn-benefits {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 0;
     padding: 34px 0 38px;
   }
@@ -1410,6 +1410,13 @@
         <h3>Home Decor</h3>
         <p>Blends seamlessly into your living space.</p>
       </article>
+      <article class="wn-benefit">
+        <span class="wn-benefit__icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M8 20h31v24H8z"/><path d="M39 28h9l8 8v8H39z"/><path d="M17 48a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM47 48a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z"/><path d="M8 38h4M39 38h3"/></svg>
+        </span>
+        <h3>Free Shipping</h3>
+        <p>Free shipping on orders over $75.</p>
+      </article>
     </div>
 
     <div class="wn-materials">
@@ -1609,7 +1616,7 @@
       <strong>The Nest Basket</strong>
       <span data-sticky-price>{{ basket_price_cents | money }}</span>
     </span>
-    <a class="wn-button wn-button--primary" href="{{ featured_collection.url | default: routes.all_products_collection_url }}">Add</a>
+    <a class="wn-button wn-button--primary" href="{{ featured_collection.url | default: routes.all_products_collection_url }}">Pre-order</a>
   </div>
 </section>
 

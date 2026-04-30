@@ -1,0 +1,35 @@
+<script>
+  (function () {
+    if (window.__yungshopPreorderGateLoaded) return;
+    window.__yungshopPreorderGateLoaded = true;
+
+    const checkoutOpensAt = Date.parse('2026-05-03T00:00:00+08:00');
+    const checkoutIsOpen = Date.now() >= checkoutOpensAt;
+
+    document.documentElement.classList.toggle('preorder-checkout-open', checkoutIsOpen);
+
+    const updateCheckoutButtons = () => {
+      document.querySelectorAll('[data-preorder-checkout-gate]').forEach((button) => {
+        const cartIsEmpty = button.dataset.cartEmpty === 'true';
+
+        if (checkoutIsOpen && !cartIsEmpty) {
+          button.disabled = false;
+          button.removeAttribute('aria-disabled');
+          button.textContent = button.dataset.openLabel || 'Checkout';
+          return;
+        }
+
+        button.disabled = true;
+        button.setAttribute('aria-disabled', 'true');
+        button.textContent = button.dataset.closedLabel || 'Checkout opens May 3';
+      });
+
+      document.querySelectorAll('[data-preorder-dynamic-checkout]').forEach((element) => {
+        element.classList.toggle('is-hidden', !checkoutIsOpen);
+      });
+    };
+
+    updateCheckoutButtons();
+    document.addEventListener('cart:updated', updateCheckoutButtons);
+  })();
+</script>

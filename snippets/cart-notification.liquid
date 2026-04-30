@@ -43,9 +43,21 @@
         >
           {{- 'general.cart.view_empty_cart' | t -}}
         </a>
+        <p class="cart__preorder-note" role="note">
+          Added for pre-order. Checkout opens on May 3, 2026.
+        </p>
         <form action="{{ routes.cart_url }}" method="post" id="cart-notification-form">
-          <button class="button button--primary button--full-width" name="checkout">
-            {{ 'sections.cart.checkout' | t }}
+          <button
+            class="button button--primary button--full-width"
+            name="checkout"
+            data-preorder-checkout-gate
+            data-open-label="{{ 'sections.cart.checkout' | t | escape }}"
+            data-closed-label="Checkout opens May 3"
+            data-cart-empty="{% if cart == empty %}true{% else %}false{% endif %}"
+            disabled
+            aria-disabled="true"
+          >
+            Checkout opens May 3
           </button>
         </form>
         <button type="button" class="link button-label">{{ 'general.continue_shopping' | t }}</button>
@@ -53,6 +65,7 @@
     </div>
   </div>
 </cart-notification>
+{% render 'preorder-checkout-gate' %}
 {% style %}
   .cart-notification {
     display: none;

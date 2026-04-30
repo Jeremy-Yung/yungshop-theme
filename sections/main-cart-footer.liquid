@@ -102,6 +102,9 @@
                     {%- endif -%}
                   {%- endif -%}
                 </small>
+                <p class="cart__preorder-note" role="note">
+                  Pre-order mode: items can be added to cart now. Checkout opens on May 3, 2026.
+                </p>
               </div>
             {%- else -%}
               <div class="cart__ctas" {{ block.shopify_attributes }}>
@@ -110,17 +113,20 @@
                   id="checkout"
                   class="cart__checkout-button button"
                   name="checkout"
-                  {% if cart == empty %}
-                    disabled
-                  {% endif %}
+                  data-preorder-checkout-gate
+                  data-open-label="{{ 'sections.cart.checkout' | t | escape }}"
+                  data-closed-label="Checkout opens May 3"
+                  data-cart-empty="{% if cart == empty %}true{% else %}false{% endif %}"
+                  disabled
+                  aria-disabled="true"
                   form="cart"
                 >
-                  {{ 'sections.cart.checkout' | t }}
+                  Checkout opens May 3
                 </button>
               </div>
 
               {%- if additional_checkout_buttons -%}
-                <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
+                <div class="cart__dynamic-checkout-buttons additional-checkout-buttons is-hidden" data-preorder-dynamic-checkout>
                   {{ content_for_additional_checkout_buttons }}
                 </div>
               {%- endif -%}
@@ -132,6 +138,7 @@
     </div>
   </div>
 </div>
+{% render 'preorder-checkout-gate' %}
 
 {% schema %}
 {

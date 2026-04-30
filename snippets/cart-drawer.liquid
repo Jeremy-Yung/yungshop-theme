@@ -557,6 +557,9 @@
               {%- endif -%}
             {%- endif -%}
           </small>
+          <p class="cart__preorder-note" role="note">
+            Pre-order mode: items can be added to cart now. Checkout opens on May 3, 2026.
+          </p>
         </div>
 
         <!-- CTAs -->
@@ -568,14 +571,18 @@
             class="cart__checkout-button button"
             name="checkout"
             form="CartDrawer-Form"
-            {% if cart == empty %}
-              disabled
-            {% endif %}
+            data-preorder-checkout-gate
+            data-open-label="{{ 'sections.cart.checkout' | t | escape }}"
+            data-closed-label="Checkout opens May 3"
+            data-cart-empty="{% if cart == empty %}true{% else %}false{% endif %}"
+            disabled
+            aria-disabled="true"
           >
-            {{ 'sections.cart.checkout' | t }}
+            Checkout opens May 3
           </button>
         </div>
       </div>
     </div>
   </div>
 </cart-drawer>
+{% render 'preorder-checkout-gate' %}

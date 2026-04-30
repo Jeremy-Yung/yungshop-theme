@@ -13,13 +13,14 @@
 <div {{ block.shopify_attributes }}>
   {%- if product != blank -%}
     {%- liquid
+      assign preorder_enabled = true
       assign gift_card_recipient_feature_active = false
       if block.settings.show_gift_card_recipient and product.gift_card?
         assign gift_card_recipient_feature_active = true
       endif
 
       assign show_dynamic_checkout = false
-      if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false
+      if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false and preorder_enabled == false
         assign show_dynamic_checkout = true
       endif
     -%}
@@ -55,6 +56,8 @@
           {% endif %}
           class="product-variant-id"
         >
+        <input type="hidden" name="properties[Purchase mode]" value="Pre-order">
+        <input type="hidden" name="properties[Checkout opens]" value="May 3, 2026">
 
         {%- if gift_card_recipient_feature_active -%}
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
@@ -88,11 +91,14 @@
               {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
                 {{ 'products.product.sold_out' | t }}
               {%- else -%}
-                {{ 'products.product.add_to_cart' | t }}
+                Pre-order: Add to Cart
               {%- endif -%}
             </span>
             {%- render 'loading-spinner' -%}
           </button>
+          <p class="product-form__preorder-note" role="note">
+            Pre-order mode is open now. You can add items to cart today; checkout starts on May 3, 2026.
+          </p>
           {%- if show_dynamic_checkout -%}
             {{ form | payment_button }}
           {%- endif -%}
