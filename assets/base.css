@@ -3680,23 +3680,6 @@ button.shopify-payment-button__button--unbranded:hover {
   max-width: 100%;
 }
 
-.product-form__preorder-note,
-.cart__preorder-note {
-  margin: 1.2rem 0 0;
-  padding: 1.2rem 1.4rem;
-  border: 1px solid rgba(89, 106, 55, 0.22);
-  border-radius: 0.8rem;
-  background: #f7f4ed;
-  color: #435227;
-  font-size: 1.3rem;
-  line-height: 1.4;
-}
-
-.cart__dynamic-checkout-buttons.is-hidden,
-.additional-checkout-buttons.is-hidden {
-  display: none;
-}
-
 .footer {
   margin-top: 0;
 }

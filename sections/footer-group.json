@@ -20,10 +20,10 @@
           }
         },
         "footer_menu": {
-          "type": "link_list",
+          "type": "text",
           "settings": {
             "heading": "Customer Care",
-            "menu": "footer"
+            "subtext": "<p>Shipping & Delivery<br/>Returns & Exchanges<br/>Size Guide<br/>Contact Support</p>"
           }
         }
       },
