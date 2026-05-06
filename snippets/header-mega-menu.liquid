@@ -8,12 +8,13 @@
 <nav class="header__inline-menu">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in section.settings.menu.links -%}
+      {%- assign link_index = forloop.index -%}
       <li>
         {%- if link.links != blank -%}
           <header-menu>
-            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
+            <details id="Details-HeaderMenu-{{ link_index }}" class="mega-menu">
               <summary
-                id="HeaderMenu-{{ link.handle }}"
+                id="HeaderMenu-{{ link_index }}"
                 class="header__menu-item list-menu__item link focus-inset"
               >
                 <span
@@ -21,12 +22,12 @@
                     class="header__active-menu-item"
                   {% endif %}
                 >
-                  {{- link.title | escape -}}
+                  {%- render 'english-link-title', title: link.title, url: link.url -%}
                 </span>
                 {{- 'icon-caret.svg' | inline_asset_content -}}
               </summary>
               <div
-                id="MegaMenu-Content-{{ forloop.index }}"
+                id="MegaMenu-Content-{{ link_index }}"
                 class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
                 tabindex="-1"
               >
@@ -35,30 +36,32 @@
                   role="list"
                 >
                   {%- for childlink in link.links -%}
+                    {%- assign child_index = forloop.index -%}
                     <li>
                       <a
-                        id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                        id="HeaderMenu-{{ link_index }}-{{ child_index }}"
                         href="{{ childlink.url }}"
                         class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
                         {% if childlink.current %}
                           aria-current="page"
                         {% endif %}
                       >
-                        {{ childlink.title | escape }}
+                        {%- render 'english-link-title', title: childlink.title, url: childlink.url -%}
                       </a>
                       {%- if childlink.links != blank -%}
                         <ul class="list-unstyled" role="list">
                           {%- for grandchildlink in childlink.links -%}
+                            {%- assign grandchild_index = forloop.index -%}
                             <li>
                               <a
-                                id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                                id="HeaderMenu-{{ link_index }}-{{ child_index }}-{{ grandchild_index }}"
                                 href="{{ grandchildlink.url }}"
                                 class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
                                 {% if grandchildlink.current %}
                                   aria-current="page"
                                 {% endif %}
                               >
-                                {{ grandchildlink.title | escape }}
+                                {%- render 'english-link-title', title: grandchildlink.title, url: grandchildlink.url -%}
                               </a>
                             </li>
                           {%- endfor -%}
@@ -84,7 +87,7 @@
                 class="header__active-menu-item"
               {% endif %}
             >
-              {{- link.title | escape -}}
+              {%- render 'english-link-title', title: link.title, url: link.url -%}
             </span>
           </a>
         {%- endif -%}

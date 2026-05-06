@@ -1,0 +1,13 @@
+{%- liquid
+  assign english_title = title
+  assign normalized_url = url | default: '' | split: '?' | first
+
+  if normalized_url == '/' or normalized_url == '/zh'
+    assign english_title = 'Home'
+  elsif normalized_url contains '/collections'
+    assign english_title = 'Catalog'
+  elsif normalized_url contains '/contact'
+    assign english_title = 'Contact'
+  endif
+-%}
+{{- english_title | escape -}}

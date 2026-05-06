@@ -22,14 +22,15 @@
           <nav class="menu-drawer__navigation">
             <ul class="menu-drawer__menu has-submenu list-menu" role="list">
               {%- for link in section.settings.menu.links -%}
+                {%- assign link_index = forloop.index -%}
                 <li>
                   {%- if link.links != blank -%}
-                    <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
+                    <details id="Details-menu-drawer-menu-item-{{ link_index }}">
                       <summary
-                        id="HeaderDrawer-{{ link.handle }}"
+                        id="HeaderDrawer-{{ link_index }}"
                         class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if link.child_active %} menu-drawer__menu-item--active{% endif %}"
                       >
-                        {{ link.title | escape }}
+                        {%- render 'english-link-title', title: link.title, url: link.url -%}
                         <span class="svg-wrapper">
                           {{- 'icon-arrow.svg' | inline_asset_content -}}
                         </span>
@@ -38,7 +39,7 @@
                         </span>
                       </summary>
                       <div
-                        id="link-{{ link.handle | escape }}"
+                        id="link-{{ link_index }}"
                         class="menu-drawer__submenu has-submenu gradient motion-reduce"
                         tabindex="-1"
                       >
@@ -47,29 +48,30 @@
                             <span class="svg-wrapper">
                               {{- 'icon-arrow.svg' | inline_asset_content -}}
                             </span>
-                            {{ link.title | escape }}
+                            {%- render 'english-link-title', title: link.title, url: link.url -%}
                           </button>
                           <ul class="menu-drawer__menu list-menu" role="list" tabindex="-1">
                             {%- for childlink in link.links -%}
+                              {%- assign child_index = forloop.index -%}
                               <li>
                                 {%- if childlink.links == blank -%}
                                   <a
-                                    id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}"
+                                    id="HeaderDrawer-{{ link_index }}-{{ child_index }}"
                                     href="{{ childlink.url }}"
                                     class="menu-drawer__menu-item link link--text list-menu__item focus-inset{% if childlink.current %} menu-drawer__menu-item--active{% endif %}"
                                     {% if childlink.current %}
                                       aria-current="page"
                                     {% endif %}
                                   >
-                                    {{ childlink.title | escape }}
+                                    {%- render 'english-link-title', title: childlink.title, url: childlink.url -%}
                                   </a>
                                 {%- else -%}
-                                  <details id="Details-menu-drawer-{{ link.handle }}-{{ childlink.handle }}">
+                                  <details id="Details-menu-drawer-{{ link_index }}-{{ child_index }}">
                                     <summary
-                                      id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}"
+                                      id="HeaderDrawer-{{ link_index }}-{{ child_index }}"
                                       class="menu-drawer__menu-item link link--text list-menu__item focus-inset"
                                     >
-                                      {{ childlink.title | escape }}
+                                      {%- render 'english-link-title', title: childlink.title, url: childlink.url -%}
                                       <span class="svg-wrapper">
                                         {{- 'icon-arrow.svg' | inline_asset_content -}}
                                       </span>
@@ -78,7 +80,7 @@
                                       </span>
                                     </summary>
                                     <div
-                                      id="childlink-{{ childlink.handle | escape }}"
+                                      id="childlink-{{ link_index }}-{{ child_index }}"
                                       class="menu-drawer__submenu has-submenu gradient motion-reduce"
                                     >
                                       <button
@@ -88,7 +90,7 @@
                                         <span class="svg-wrapper">
                                           {{- 'icon-arrow.svg' | inline_asset_content -}}
                                         </span>
-                                        {{ childlink.title | escape }}
+                                        {%- render 'english-link-title', title: childlink.title, url: childlink.url -%}
                                       </button>
                                       <ul
                                         class="menu-drawer__menu list-menu"
@@ -96,16 +98,17 @@
                                         tabindex="-1"
                                       >
                                         {%- for grandchildlink in childlink.links -%}
+                                          {%- assign grandchild_index = forloop.index -%}
                                           <li>
                                             <a
-                                              id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                                              id="HeaderDrawer-{{ link_index }}-{{ child_index }}-{{ grandchild_index }}"
                                               href="{{ grandchildlink.url }}"
                                               class="menu-drawer__menu-item link link--text list-menu__item focus-inset{% if grandchildlink.current %} menu-drawer__menu-item--active{% endif %}"
                                               {% if grandchildlink.current %}
                                                 aria-current="page"
                                               {% endif %}
                                             >
-                                              {{ grandchildlink.title | escape }}
+                                              {%- render 'english-link-title', title: grandchildlink.title, url: grandchildlink.url -%}
                                             </a>
                                           </li>
                                         {%- endfor -%}
@@ -121,14 +124,14 @@
                     </details>
                   {%- else -%}
                     <a
-                      id="HeaderDrawer-{{ link.handle }}"
+                      id="HeaderDrawer-{{ link_index }}"
                       href="{{ link.url }}"
                       class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if link.current %} menu-drawer__menu-item--active{% endif %}"
                       {% if link.current %}
                         aria-current="page"
                       {% endif %}
                     >
-                      {{ link.title | escape }}
+                      {%- render 'english-link-title', title: link.title, url: link.url -%}
                     </a>
                   {%- endif -%}
                 </li>

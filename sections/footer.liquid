@@ -200,12 +200,14 @@
                     {%- if block.settings.menu != blank -%}
                       <ul class="footer-block__details-content list-unstyled">
                         {%- for link in block.settings.menu.links -%}
+                          {%- assign footer_link_index = forloop.index -%}
                           <li>
                             <a
                               href="{{ link.url }}"
+                              id="FooterMenu-{{ block.id }}-{{ footer_link_index }}"
                               class="link link--text list-menu__item list-menu__item--link{% if link.active %} list-menu__item--active{% endif %}"
                             >
-                              {{ link.title | escape }}
+                              {%- render 'english-link-title', title: link.title, url: link.url -%}
                             </a>
                           </li>
                         {%- endfor -%}
@@ -417,9 +419,21 @@
           <ul class="policies list-unstyled">
             {%- for policy in shop.policies -%}
               {%- if policy != blank -%}
+                {%- liquid
+                  assign policy_title = policy.title
+                  if policy.url contains 'privacy-policy'
+                    assign policy_title = 'Privacy Policy'
+                  elsif policy.url contains 'refund-policy'
+                    assign policy_title = 'Refund Policy'
+                  elsif policy.url contains 'terms-of-service'
+                    assign policy_title = 'Terms of Service'
+                  elsif policy.url contains 'contact-information'
+                    assign policy_title = 'Contact Information'
+                  endif
+                -%}
                 <li>
                   <small class="copyright__content"
-                    ><a href="{{ policy.url }}">{{ policy.title | escape }}</a></small
+                    ><a href="{{ policy.url }}">{{ policy_title | escape }}</a></small
                   >
                 </li>
               {%- endif -%}
