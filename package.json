@@ -1,0 +1,15 @@
+{
+  "name": "yungshop-theme",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Shopify theme performance tooling.",
+  "scripts": {
+    "lhci": "lhci autorun",
+    "perf": "npm run perf:mobile && npm run perf:desktop",
+    "perf:mobile": "LHCI_FORM_FACTOR=mobile lhci autorun",
+    "perf:desktop": "LHCI_FORM_FACTOR=desktop lhci autorun"
+  },
+  "devDependencies": {
+    "@lhci/cli": "^0.15.1"
+  }
+}
