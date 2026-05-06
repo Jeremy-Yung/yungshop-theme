@@ -1438,8 +1438,7 @@
       <div class="wn-material-grid">
         <a class="wn-material" href="{{ primary_link }}" aria-label="Shop Natural Woven cat baskets">
           <img
-            src="{{ 'product-main-v3-01.webp' | asset_img_url: '320x320' }}"
-            srcset="{{ 'product-main-v3-01.webp' | asset_img_url: '180x180' }} 180w, {{ 'product-main-v3-01.webp' | asset_img_url: '240x240' }} 240w, {{ 'product-main-v3-01.webp' | asset_img_url: '320x320' }} 320w"
+            src="{{ 'product-main-v3-01.webp' | asset_url }}"
             sizes="(max-width: 749px) 46vw, 24vw"
             alt="Natural woven cat basket in use"
             width="320"
@@ -1452,8 +1451,7 @@
         </a>
         <a class="wn-material" href="{{ primary_link }}" aria-label="Shop PP Woven cat baskets">
           <img
-            src="{{ 'product-main-v3-02.webp' | asset_img_url: '320x320' }}"
-            srcset="{{ 'product-main-v3-02.webp' | asset_img_url: '180x180' }} 180w, {{ 'product-main-v3-02.webp' | asset_img_url: '240x240' }} 240w, {{ 'product-main-v3-02.webp' | asset_img_url: '320x320' }} 320w"
+            src="{{ 'product-main-v3-02.webp' | asset_url }}"
             sizes="(max-width: 749px) 46vw, 24vw"
             alt="PP woven cat bed with cooling mat"
             width="320"
@@ -1484,7 +1482,7 @@
                     {%- elsif section.settings.product_card_image != blank -%}
                       {{ section.settings.product_card_image | image_url: width: 280 | image_tag: loading: 'lazy', widths: '140, 180, 220, 280, 320', sizes: '(max-width: 749px) 44vw, 16vw', alt: product.title }}
                     {%- else -%}
-                      <img src="{{ 'woven-nap-product.webp' | asset_img_url: '280x280' }}" alt="{{ product.title | escape }}" width="280" height="215" loading="lazy">
+                      <img src="{{ 'woven-nap-product.webp' | asset_url }}" alt="{{ product.title | escape }}" width="280" height="215" loading="lazy">
                     {%- endif -%}
                   </a>
                   <div class="wn-product__body">
@@ -1515,7 +1513,7 @@
                     {%- if section.settings.product_card_image != blank -%}
                       {{ section.settings.product_card_image | image_url: width: 280 | image_tag: loading: 'lazy', widths: '140, 180, 220, 280, 320', sizes: '(max-width: 749px) 44vw, 16vw', alt: title }}
                     {%- else -%}
-                      <img src="{{ fallback_product_images[forloop.index0] | asset_img_url: '280x280' }}" alt="{{ title | escape }}" width="280" height="280" loading="lazy">
+                      <img src="{{ fallback_product_images[forloop.index0] | asset_url }}" alt="{{ title | escape }}" width="280" height="280" loading="lazy">
                     {%- endif -%}
                   </a>
                   <div class="wn-product__body">
@@ -1635,7 +1633,7 @@
     {%- if section.settings.product_card_image != blank -%}
       {{ section.settings.product_card_image | image_url: width: 92 | image_tag: alt: '', width: 92, height: 92, loading: 'lazy' }}
     {%- else -%}
-      <img src="{{ 'product-main-v3-01.webp' | asset_img_url: '92x92' }}" alt="" width="92" height="92" loading="lazy">
+      <img src="{{ 'product-main-v3-01.webp' | asset_url }}" alt="" width="92" height="92" loading="lazy">
     {%- endif -%}
     <span>
       <strong>The Nest Basket</strong>
