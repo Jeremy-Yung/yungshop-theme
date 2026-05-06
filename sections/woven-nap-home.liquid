@@ -1,25 +1,25 @@
 {%- liquid
-  assign hero_image_url = 'woven-nap-hero-desktop.png' | asset_url
+  assign hero_image_url = 'woven-nap-hero-desktop.webp' | asset_url
   if section.settings.hero_image != blank
-    assign hero_image_url = section.settings.hero_image | image_url: width: 2200
+    assign hero_image_url = section.settings.hero_image | image_url: width: 1672
   endif
 
-  assign hero_mobile_image_url = 'woven-nap-hero-mobile.png' | asset_url
+  assign hero_mobile_image_url = 'woven-nap-hero-mobile.webp' | asset_url
   if section.settings.hero_mobile_image != blank
-    assign hero_mobile_image_url = section.settings.hero_mobile_image | image_url: width: 1200
+    assign hero_mobile_image_url = section.settings.hero_mobile_image | image_url: width: 900
   endif
 
-  assign before_image_url = 'woven-nap-before.png' | asset_url
+  assign before_image_url = 'woven-nap-before.webp' | asset_url
   if section.settings.before_image != blank
-    assign before_image_url = section.settings.before_image | image_url: width: 1200
+    assign before_image_url = section.settings.before_image | image_url: width: 900
   endif
 
-  assign after_image_url = 'woven-nap-after.png' | asset_url
+  assign after_image_url = 'woven-nap-after.webp' | asset_url
   if section.settings.after_image != blank
-    assign after_image_url = section.settings.after_image | image_url: width: 1200
+    assign after_image_url = section.settings.after_image | image_url: width: 900
   endif
 
-  assign fallback_product_images = 'product-main-v3-01.jpg|product-main-v3-02.jpg|product-main-v3-03.jpg|product-main-v3-04.jpg|product-main-v3-05.jpg' | split: '|'
+  assign fallback_product_images = 'product-main-v3-01.webp|product-main-v3-02.webp|product-main-v3-03.webp|product-main-v3-04.webp|product-main-v3-05.webp' | split: '|'
 
   assign featured_collection = section.settings.collection
   assign selected_product = section.settings.featured_product
@@ -126,10 +126,7 @@
     position: relative;
     min-height: 520px;
     aspect-ratio: 1672 / 941;
-    background-image: var(--wn-hero-image);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: #f4efe6;
     border-bottom: 1px solid var(--wn-line);
   }
 
@@ -807,10 +804,6 @@
 
     #shopify-section-{{ section.id }} .wn-hero {
       min-height: 0;
-      background-image: var(--wn-hero-image);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
     }
 
     #shopify-section-{{ section.id }} .wn-hero__content {
@@ -925,8 +918,6 @@
 
     #shopify-section-{{ section.id }} .wn-hero {
       aspect-ratio: 853 / 1844;
-      background-image: var(--wn-hero-mobile-image);
-      background-position: center top;
     }
 
     #shopify-section-{{ section.id }} .wn-hero__picture img {
@@ -1358,8 +1349,6 @@
 <section
   class="wn-home"
   style="
-    --wn-hero-image: url('{{ hero_image_url }}');
-    --wn-hero-mobile-image: url('{{ hero_mobile_image_url }}');
     --wn-before-image: url('{{ before_image_url }}');
     --wn-after-image: url('{{ after_image_url }}');
   "
@@ -1449,12 +1438,12 @@
       <div class="wn-material-grid">
         <a class="wn-material" href="{{ primary_link }}" aria-label="Shop Natural Woven cat baskets">
           <img
-            src="{{ 'product-main-v3-01.jpg' | asset_img_url: '360x360' }}"
-            srcset="{{ 'product-main-v3-01.jpg' | asset_img_url: '220x220' }} 220w, {{ 'product-main-v3-01.jpg' | asset_img_url: '360x360' }} 360w, {{ 'product-main-v3-01.jpg' | asset_img_url: '540x540' }} 540w"
+            src="{{ 'product-main-v3-01.webp' | asset_img_url: '320x320' }}"
+            srcset="{{ 'product-main-v3-01.webp' | asset_img_url: '180x180' }} 180w, {{ 'product-main-v3-01.webp' | asset_img_url: '240x240' }} 240w, {{ 'product-main-v3-01.webp' | asset_img_url: '320x320' }} 320w"
             sizes="(max-width: 749px) 46vw, 24vw"
             alt="Natural woven cat basket in use"
-            width="360"
-            height="360"
+            width="320"
+            height="320"
             loading="lazy">
           <span class="wn-material__body">
             <strong>Natural Woven</strong>
@@ -1463,12 +1452,12 @@
         </a>
         <a class="wn-material" href="{{ primary_link }}" aria-label="Shop PP Woven cat baskets">
           <img
-            src="{{ 'product-main-v3-02.jpg' | asset_img_url: '360x360' }}"
-            srcset="{{ 'product-main-v3-02.jpg' | asset_img_url: '220x220' }} 220w, {{ 'product-main-v3-02.jpg' | asset_img_url: '360x360' }} 360w, {{ 'product-main-v3-02.jpg' | asset_img_url: '540x540' }} 540w"
+            src="{{ 'product-main-v3-02.webp' | asset_img_url: '320x320' }}"
+            srcset="{{ 'product-main-v3-02.webp' | asset_img_url: '180x180' }} 180w, {{ 'product-main-v3-02.webp' | asset_img_url: '240x240' }} 240w, {{ 'product-main-v3-02.webp' | asset_img_url: '320x320' }} 320w"
             sizes="(max-width: 749px) 46vw, 24vw"
             alt="PP woven cat bed with cooling mat"
-            width="360"
-            height="360"
+            width="320"
+            height="320"
             loading="lazy">
           <span class="wn-material__body">
             <strong>PP Woven</strong>
@@ -1491,11 +1480,11 @@
                 <article class="wn-product">
                   <a class="wn-product__image" href="{{ product.url }}">
                     {%- if product.featured_image != blank -%}
-                      {{ product.featured_image | image_url: width: 360 | image_tag: loading: 'lazy', widths: '160, 240, 320, 360, 480', sizes: '(max-width: 749px) 46vw, 18vw', alt: product.featured_image.alt | default: product.title }}
+                      {{ product.featured_image | image_url: width: 280 | image_tag: loading: 'lazy', widths: '140, 180, 220, 280, 320', sizes: '(max-width: 749px) 44vw, 16vw', alt: product.featured_image.alt | default: product.title }}
                     {%- elsif section.settings.product_card_image != blank -%}
-                      {{ section.settings.product_card_image | image_url: width: 360 | image_tag: loading: 'lazy', widths: '160, 240, 320, 360, 480', sizes: '(max-width: 749px) 46vw, 18vw', alt: product.title }}
+                      {{ section.settings.product_card_image | image_url: width: 280 | image_tag: loading: 'lazy', widths: '140, 180, 220, 280, 320', sizes: '(max-width: 749px) 44vw, 16vw', alt: product.title }}
                     {%- else -%}
-                      <img src="{{ 'woven-nap-product.png' | asset_img_url: '360x360' }}" alt="{{ product.title | escape }}" width="360" height="276" loading="lazy">
+                      <img src="{{ 'woven-nap-product.webp' | asset_img_url: '280x280' }}" alt="{{ product.title | escape }}" width="280" height="215" loading="lazy">
                     {%- endif -%}
                   </a>
                   <div class="wn-product__body">
@@ -1524,9 +1513,9 @@
                 <article class="wn-product">
                   <a class="wn-product__image" href="{{ routes.all_products_collection_url }}">
                     {%- if section.settings.product_card_image != blank -%}
-                      {{ section.settings.product_card_image | image_url: width: 360 | image_tag: loading: 'lazy', widths: '160, 240, 320, 360, 480', sizes: '(max-width: 749px) 46vw, 18vw', alt: title }}
+                      {{ section.settings.product_card_image | image_url: width: 280 | image_tag: loading: 'lazy', widths: '140, 180, 220, 280, 320', sizes: '(max-width: 749px) 44vw, 16vw', alt: title }}
                     {%- else -%}
-                      <img src="{{ fallback_product_images[forloop.index0] | asset_img_url: '360x360' }}" alt="{{ title | escape }}" width="360" height="360" loading="lazy">
+                      <img src="{{ fallback_product_images[forloop.index0] | asset_img_url: '280x280' }}" alt="{{ title | escape }}" width="280" height="280" loading="lazy">
                     {%- endif -%}
                   </a>
                   <div class="wn-product__body">
@@ -1646,7 +1635,7 @@
     {%- if section.settings.product_card_image != blank -%}
       {{ section.settings.product_card_image | image_url: width: 92 | image_tag: alt: '', width: 92, height: 92, loading: 'lazy' }}
     {%- else -%}
-      <img src="{{ 'product-main-v3-01.jpg' | asset_url }}" alt="" width="92" height="92" loading="lazy">
+      <img src="{{ 'product-main-v3-01.webp' | asset_img_url: '92x92' }}" alt="" width="92" height="92" loading="lazy">
     {%- endif -%}
     <span>
       <strong>The Nest Basket</strong>
