@@ -66,7 +66,7 @@
           "settings": {
             "heading": "Shipping & delivery",
             "icon": "truck",
-            "content": "<p>Processing time: 1-3 business days after payment confirmation.</p><p>Estimated delivery: 7-15 business days for most United States orders. Delivery to remote areas or during peak seasons may take longer.</p><p>A tracking number will be sent by email once your order ships. If your package has not updated for several days, contact us and we will help check the shipment.</p>",
+            "content": "<p>Free standard shipping on every order. Shipping cost is covered by the seller.</p><p>Orders usually ship within 1-3 business days. Estimated delivery is 7-15 business days for most United States orders.</p><p>Tracking details will be emailed once your order ships.</p>",
             "page": ""
           }
         },
@@ -75,7 +75,7 @@
           "settings": {
             "heading": "Duties & taxes",
             "icon": "price_tag",
-            "content": "<p>Product prices do not include import duties, customs fees, VAT, GST, or other local taxes unless clearly stated at checkout.</p><p>Any duties, taxes, or customs clearance charges are determined by the destination country or region and are the buyer's responsibility.</p><p>If a shipment is delayed by customs, we will assist with available tracking information, but customs review times are outside our control.</p>",
+            "content": "<p>No extra shipping fee will be charged by us.</p><p>Any local import duties, customs fees, or taxes, if charged by your country or region, are the buyer's responsibility.</p>",
             "page": ""
           }
         },
