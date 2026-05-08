@@ -869,8 +869,10 @@
 
       if product_vendor_downcase contains 'http://' or product_vendor_downcase contains 'https://' or product_vendor_downcase contains 'www.' or product_vendor_downcase contains '1688.com'
         assign vendor_json = product.vendor | json
+        assign vendor_json_escaped_slashes = vendor_json | replace: '/', '\/'
         assign shop_name_json = shop.name | json
         assign structured_product_data = structured_product_data | replace: vendor_json, shop_name_json
+        assign structured_product_data = structured_product_data | replace: vendor_json_escaped_slashes, shop_name_json
       endif
     -%}
 
