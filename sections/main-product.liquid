@@ -106,6 +106,20 @@
             assign product_excerpt = product_description_plain | truncatewords: 26
           -%}
 
+          {%- if product.handle == 'handwoven-willow-cat-carry-basket' -%}
+            {%- capture product_detail_override -%}
+              <p>Handwoven from pure natural willow branches, this carry basket keeps the original texture and breathable feel of the material.</p>
+              <ul>
+                <li><strong>Material:</strong> 100% natural willow branches, handwoven for a warm organic finish.</li>
+                <li><strong>Maximum load:</strong> supports cats up to 20 lb.</li>
+                <li><strong>Use:</strong> designed as a cozy carry basket and resting spot for daily indoor use.</li>
+                <li><strong>Care:</strong> keep dry, wipe gently with a soft cloth, and avoid long exposure to rain or direct moisture.</li>
+              </ul>
+            {%- endcapture -%}
+            {%- assign product_description_plain = product_detail_override | strip_html | strip_newlines | strip -%}
+            {%- assign product_excerpt = 'Handwoven from pure natural willow branches with a breathable open-weave shape. Designed as a cozy carry basket for cats up to 20 lb.' -%}
+          {%- endif -%}
+
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when '@app' -%}
@@ -235,10 +249,14 @@
                   </p>
                 {%- endcapture -%}
               {%- when 'description' -%}
-                {%- if product.description != blank -%}
+                {%- if product_detail_override != blank or product.description != blank -%}
                   {%- capture description_block -%}
                     <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-                      {{ product.description }}
+                      {%- if product_detail_override != blank -%}
+                        {{ product_detail_override }}
+                      {%- else -%}
+                        {{ product.description }}
+                      {%- endif -%}
                     </div>
                   {%- endcapture -%}
                 {%- endif -%}
@@ -879,7 +897,7 @@
           "@type": "Brand",
           "name": {{ shop.name | json }}
         },
-        "description": {{ product.description | strip_html | json }},
+        "description": {{ product_description_plain | json }},
         {%- if product.featured_image -%}
           "image": {{ product_schema_image | json }},
         {%- endif -%}
