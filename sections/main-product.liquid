@@ -864,20 +864,46 @@
         assign seo_media = product.featured_media
       endif
 
-      assign structured_product_data = product | structured_data
       assign product_vendor_downcase = product.vendor | downcase
+      assign has_source_url_vendor = false
 
       if product_vendor_downcase contains 'http://' or product_vendor_downcase contains 'https://' or product_vendor_downcase contains 'www.' or product_vendor_downcase contains '1688.com'
-        assign vendor_json = product.vendor | json
-        assign vendor_json_escaped_slashes = vendor_json | replace: '/', '\/'
-        assign shop_name_json = shop.name | json
-        assign structured_product_data = structured_product_data | replace: vendor_json, shop_name_json
-        assign structured_product_data = structured_product_data | replace: vendor_json_escaped_slashes, shop_name_json
+        assign has_source_url_vendor = true
+        assign current_variant = product.selected_or_first_available_variant
+        assign product_schema_url = shop.url | append: product.url
+        assign variant_schema_url = product_schema_url | append: '?variant=' | append: current_variant.id
+        assign product_schema_price = current_variant.price | money_without_currency | replace: ',', ''
+        assign product_schema_image = product.featured_image | image_url: width: 1200 | prepend: 'https:'
       endif
     -%}
 
     <script type="application/ld+json">
-      {{ structured_product_data }}
+      {%- if has_source_url_vendor -%}
+        {
+          "@context": "http://schema.org/",
+          "@type": "Product",
+          "brand": {
+            "@type": "Brand",
+            "name": {{ shop.name | json }}
+          },
+          "description": {{ product.description | strip_html | json }},
+          {%- if product.featured_image -%}
+            "image": {{ product_schema_image | json }},
+          {%- endif -%}
+          "name": {{ product.title | json }},
+          "offers": {
+            "@type": "Offer",
+            "availability": "http://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+            "price": {{ product_schema_price | json }},
+            "priceCurrency": {{ cart.currency.iso_code | json }},
+            "url": {{ variant_schema_url | json }}
+          },
+          "sku": {{ current_variant.sku | json }},
+          "url": {{ product_schema_url | json }}
+        }
+      {%- else -%}
+        {{ product | structured_data }}
+      {%- endif -%}
     </script>
   </div>
 </product-info>
