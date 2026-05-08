@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://www.pawpygo.com/",
+    "isRepresentativeRun": true,
+    "htmlPath": "/Users/yangbobo/Documents/私人文件/个人工作/跨境电商/独立站case_v2/yungshop-theme/.lighthouseci-mobile-current/www_pawpygo_com--2026_05_07_09_05_02.report.html",
+    "jsonPath": "/Users/yangbobo/Documents/私人文件/个人工作/跨境电商/独立站case_v2/yungshop-theme/.lighthouseci-mobile-current/www_pawpygo_com--2026_05_07_09_05_02.report.json",
+    "summary": {
+      "performance": 0.92,
+      "accessibility": 0.95,
+      "best-practices": 0.75,
+      "seo": 0.92
+    }
+  }
+]
