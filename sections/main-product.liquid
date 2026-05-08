@@ -863,10 +863,19 @@
       else
         assign seo_media = product.featured_media
       endif
+
+      assign structured_product_data = product | structured_data
+      assign product_vendor_downcase = product.vendor | downcase
+
+      if product_vendor_downcase contains 'http://' or product_vendor_downcase contains 'https://' or product_vendor_downcase contains 'www.' or product_vendor_downcase contains '1688.com'
+        assign vendor_json = product.vendor | json
+        assign shop_name_json = shop.name | json
+        assign structured_product_data = structured_product_data | replace: vendor_json, shop_name_json
+      endif
     -%}
 
     <script type="application/ld+json">
-      {{ product | structured_data }}
+      {{ structured_product_data }}
     </script>
   </div>
 </product-info>
