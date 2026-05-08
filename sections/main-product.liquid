@@ -111,15 +111,26 @@
               {%- when '@app' -%}
                 {%- capture app_blocks -%}{{ app_blocks }}{% render block %}{%- endcapture -%}
               {%- when 'text' -%}
-                {%- capture intro_text_blocks -%}
-                  {{ intro_text_blocks }}
-                  <p
-                    class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
-                    {{ block.shopify_attributes }}
-                  >
-                    {{- block.settings.text -}}
-                  </p>
-                {%- endcapture -%}
+                {%- liquid
+                  assign text_content = block.settings.text | strip
+                  assign text_content_downcase = text_content | downcase
+                  assign should_hide_text_block = false
+
+                  if text_content_downcase contains 'http://' or text_content_downcase contains 'https://' or text_content_downcase contains 'www.' or text_content_downcase contains '1688.com'
+                    assign should_hide_text_block = true
+                  endif
+                -%}
+                {%- unless should_hide_text_block or text_content == blank -%}
+                  {%- capture intro_text_blocks -%}
+                    {{ intro_text_blocks }}
+                    <p
+                      class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
+                      {{ block.shopify_attributes }}
+                    >
+                      {{- text_content -}}
+                    </p>
+                  {%- endcapture -%}
+                {%- endunless -%}
               {%- when 'title' -%}
                 {%- capture title_block -%}
                   <div class="product__title" {{ block.shopify_attributes }}>
