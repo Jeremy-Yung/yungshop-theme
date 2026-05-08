@@ -64,9 +64,18 @@
         "shipping_info": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Shipping & returns",
+            "heading": "Shipping & delivery",
             "icon": "truck",
-            "content": "<p>Orders are processed quickly with tracking when available. If something is not right, contact us and we will help with the next step.</p>",
+            "content": "<p>Processing time: 1-3 business days after payment confirmation.</p><p>Estimated delivery: 7-15 business days for most United States orders. Delivery to remote areas or during peak seasons may take longer.</p><p>A tracking number will be sent by email once your order ships. If your package has not updated for several days, contact us and we will help check the shipment.</p>",
+            "page": ""
+          }
+        },
+        "duties_taxes": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Duties & taxes",
+            "icon": "price_tag",
+            "content": "<p>Product prices do not include import duties, customs fees, VAT, GST, or other local taxes unless clearly stated at checkout.</p><p>Any duties, taxes, or customs clearance charges are determined by the destination country or region and are the buyer's responsibility.</p><p>If a shipment is delayed by customs, we will assist with available tracking information, but customs review times are outside our control.</p>",
             "page": ""
           }
         },
@@ -96,6 +105,7 @@
         "trust_icons",
         "description",
         "shipping_info",
+        "duties_taxes",
         "product_care",
         "share"
       ],
